@@ -1,0 +1,67 @@
+{
+  "expo": {
+    "name": "busapp",
+    "slug": "busapp",
+    "version": "1.1.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#023526"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to let you share them with your friends.",
+          "cameraPermission": "Allow $(PRODUCT_NAME) to access camera."
+        }
+      ]
+    ],
+    "ios": {
+      "jsEngine": "jsc",
+      "supportsTablet": true,
+      "infoPlist": {
+        "UIBackgroundModes": [
+          "audio"
+        ],
+        "NSCameraUsageDescription": "Allow $(PRODUCT_NAME) to access camera.",
+        "NSMicrophoneUsageDescription": "Allow $(PRODUCT_NAME) to access your microphone"
+      }
+    },
+    "android": {
+      "versionCode": 10,
+      "permission": [
+        "com.google.android.gms.permission.AD_ID",
+        "android.permission.CAMERA"
+      ],
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyAsjKM16fbsmVRNU4jlrhn3yinTyu3z5JU"
+        }
+      },
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.samheart.busapp",
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "jsEngine": "hermes",
+    "extra": {
+      "eas": {
+        "projectId": "84b59ff0-23a9-4719-a0ad-9bd6d7e3fe95"
+      }
+    }
+  }
+}

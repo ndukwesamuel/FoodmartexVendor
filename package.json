@@ -1,0 +1,49 @@
+{
+  "name": "busapp",
+  "version": "1.06",
+  "main": "node_modules/expo/AppEntry.js",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web"
+  },
+  "dependencies": {
+    "@react-native-async-storage/async-storage": "^1.22.3",
+    "@react-navigation/bottom-tabs": "^6.5.16",
+    "@react-navigation/drawer": "^6.6.15",
+    "@react-navigation/native": "^6.1.14",
+    "@react-navigation/native-stack": "^6.9.22",
+    "@reduxjs/toolkit": "^2.2.1",
+    "@types/react": "~18.2.45",
+    "axios": "^1.6.8",
+    "expo": "~50.0.8",
+    "expo-location": "^16.5.5",
+    "expo-splash-screen": "~0.26.4",
+    "expo-status-bar": "~1.11.1",
+    "react": "18.2.0",
+    "react-native": "0.73.4",
+    "react-native-gesture-handler": "~2.14.0",
+    "react-native-maps": "1.10.0",
+    "react-native-paystack-webview": "^4.1.4",
+    "react-native-reanimated": "~3.6.2",
+    "react-native-safe-area-context": "4.8.2",
+    "react-native-screens": "~3.29.0",
+    "react-native-toast-message": "^2.2.0",
+    "react-native-webview": "13.6.4",
+    "react-query": "^3.39.3",
+    "react-redux": "^9.1.0",
+    "redux-persist": "^6.0.0",
+    "typescript": "^5.3.0",
+    "expo-image-picker": "~14.7.1",
+    "expo-checkbox": "~2.7.0",
+    "@react-native-picker/picker": "2.6.1",
+    "@react-native-community/datetimepicker": "7.7.0",
+    "react-native-svg": "14.1.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.0",
+    "@types/react-native": "^0.73.0"
+  },
+  "private": true
+}

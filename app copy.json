@@ -1,0 +1,45 @@
+{
+  "expo": {
+    "name": "busapp",
+    "slug": "busapp",
+    "version": "1.0.5",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "versionCode": 5,
+      "permission": [
+        "com.google.android.gms.permission.AD_ID"
+      ],
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyAsjKM16fbsmVRNU4jlrhn3yinTyu3z5JU"
+        }
+      },
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.samheart.busapp"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "043aa058-fce8-4b43-a407-fffa3f0478c1"
+      }
+    }
+  }
+}
