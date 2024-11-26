@@ -18,9 +18,8 @@ const AuthOnboarding = ({ setStart }) => {
       <View style={styles.overlay}>
         <View style={styles.contentContainer}>
           <Text style={styles.subtitle}>
-            Welcome to a world where every craving meets its match. Dive into a
-            culinary adventure where your favorite flavors are just a tap away,
-            let us bring your cravings straight to your door!"
+            Our solution is crafted to propel your business toward growth and
+            success.
           </Text>
 
           <View style={{ justifyContent: "center", marginLeft: 25 }}>
@@ -67,10 +66,10 @@ const styles = StyleSheet.create({
   subtitle: {
     color: "#fff",
     fontSize: 24,
-    textAlign: "center",
+    // textAlign: "center",
     marginBottom: 20,
     fontWeight: "500",
-    // width: "80%",
+    width: "80%",
     paddingLeft: 15,
   },
   button: {

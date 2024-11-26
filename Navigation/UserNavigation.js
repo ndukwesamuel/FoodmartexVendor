@@ -71,7 +71,7 @@ export default function UserNavigation() {
       <Stack.Screen name="RewardsScreen" component={FirstRewardScreen} />
       <Stack.Screen name="PointHistory" component={SecondRewardScreen} />
       <Stack.Screen name="Detail" component={DetailsPage} />
-      <Stack.Screen name="Detail" component={DetailsPage} />
+      {/* <Stack.Screen name="Detail" component={DetailsPage} />? */}
       <Stack.Screen name="updatePassword" component={UpdatePassword} />
 
       {/* the order screen end here */}

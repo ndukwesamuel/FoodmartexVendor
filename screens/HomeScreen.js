@@ -49,7 +49,7 @@ const HomeScreen = () => {
           <TouchableOpacity onPress={() => setnotification("account")}>
             <Image
               source={{
-                uri: "https://s3-alpha-sig.figma.com/img/9265/f6e3/e22a4d011fdf9bee1bc447fd54300962?Expires=1732492800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=frC5B-Z2NhGFgmYjZ7O0ExewGy2ZjbMA5TANJZKdox689M0O-rBcTykS5g2slmFVlViF4SUIvCt2ks5LKcLolm5iJX63JcLEaHE6aw4~rkvMUyn5znE~UBF~7UYDUz-8Skn18O8lOQRSRZYnh84j9k8nW58AR7f3lsQ23wWBPv1GAUAkHbNboCMDA4p4lz1LtA6Ape6MA0Anu0X4MJvZ1x5H4djNdqpZbOioRsifMI-7HSujIWt30-JcUG24g6yBVz1cyB0nTUbQKHX3BJbJdBFMCp4H-gWGRNq0RPfdATZf4H~UlL~uahR7W0t6fECapBmo42FwUortllMJE82taQ__",
+                uri: "https://s3-alpha-sig.figma.com/img/9265/f6e3/e22a4d011fdf9bee1bc447fd54300962?Expires=1733702400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=DJstDRZyzM8SPgw~rxOWWk6UQQXvtjM73QA9SnQ34mdW-0RlWzwMhJJRdVdo0NI5YZXSp7Xe~jQxKExk7rLFTFhQev4IBH55Ok0vbC8ABCk7Kl9g-4axNOKc5p~qUUK9mvoODmjb8fTIP2jPPIUT4vLauhnrYkf6JzvPvapnZpxXdqBGZIoZOPpwtuph4ARUkYckYWGuNPBpAUQfvLSVNgkQNsaJc95ZKfnOwo4fic~un8FxAuNU76on51nhXSoI1fX2of-naJYGUovOpcBMZwMuQKr2sdipSMOTJcMmsmZihOT6vVmxd23epbBeLZ~tBedyUmphCKxfFHoLs7AOzA__",
               }} // Replace with profile picture URL
               style={styles.profileImage}
             />
@@ -77,107 +77,106 @@ const HomeScreen = () => {
                 color="black"
               />
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate("Notification")}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("Notification")}
+            >
               <Ionicons name="notifications-outline" size={24} color="black" />
             </TouchableOpacity>
           </View>
         </View>
         {notification === "home" && (
-          <>
-            {/* Address Section */}
-            <View style={styles.addressContainer}>
-              <Text style={styles.addressText}>
-                Address lorem dolor officia...
-              </Text>
-            </View>
-
+          <View
+            style={{
+              flex: 1,
+              marginTop: "30%",
+            }}
+          >
             {/* Cashback Promo Section */}
-            <View style={styles.promoContainer}>
-              <View>
-                <Text style={styles.promoText}>
-                  Get 20% cashback this weekend!
-                </Text>
-                <Text style={styles.promoCode}>Using promo code</Text>
-                <Text style={styles.boldText}>#HURRAY31</Text>
-              </View>
-
-              <View>
-                <Image
-                  source={{
-                    uri: "https://s3-alpha-sig.figma.com/img/de2c/d1c7/c1ef1b8e0645087980b220d0e63f6b27?Expires=1732492800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=SJOxr~6YjLibtCxH-8C6~5grlETFghSEWB4v84pxPP2VZ-fOE8pfuMJYVL5wKc2ejeZw4Zr~FH2mrX-kPB~clRkH-49Mz2t7MfkCjat8f68hdUgUW8qJTs9K5ZjF5mWiKbf7guUSc~c52hwFxVsg2oukM4Oz2ZRdlHpgmXHN3SHvEAjCP8gm4Uf0JM5XRoGBolsBv6F4nIJLXkRN~aWIUUXjKxqAyD1MClvm19v8pIHbicWYQ24A-hw-aek6gZDRmI0-~RkFFxNe8~U~JLWj16QFQ-8T4yugdzTSMOpby2PBb9ibwhSFm0W0bh2kBa-5RpjPrcfiAU0zJ0F9WE0ePg__",
-                  }}
-                  style={{
-                    width: 100,
-                    height: 100,
-                  }}
-                />
-              </View>
-            </View>
 
             {/* Greeting Section */}
             <View>
               <Text style={styles.greetingText}>Hello User,</Text>
-              <Text style={styles.subText}>Go through;</Text>
+            </View>
+
+            <View style={styles.promoContainer}>
+              <Image
+                source={{
+                  uri: "https://s3-alpha-sig.figma.com/img/6bca/0ae8/128354487efa51482957684e0d56f89f?Expires=1733702400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=UnJCAW4DT9aq9S1dtNeqmXk2dJucOVo5bxaWqN0E2WEXjsTQD3Jr6MniBAE7fDrdA73sy4oCw007r7aQWJeIGiDYsIHPEXJ5XJi~LdRA-o04HZR-WnnrrmJX-DaUmDv~LnTMsUWDlFtWYTcQ9JHSS~U0lq34ynMXVeQ9~UyqSC0T~yq-V-r-O83G7RGeObfc8ds7DkS7I6x~aBuNVm5E34-ehaBCSgenujDQN8zNMyAunBZoHU1mWWmvE4sGLB93EjoMbt3xwofJO2sJM8G2e0P0sMgpsFpfjBZNL~HjAaht~NtO-o7ZxKm9wT5LEOZVmWPjgZu5fkqruCX~lcsf-Q__",
+                }}
+                style={{
+                  width: 56,
+                  height: 56,
+                }}
+              />
+              <Text
+                style={{
+                  fontSize: 32,
+                  color: "#CC5600",
+                }}
+              >
+                New Orders
+              </Text>
             </View>
 
             {/* Discounts & Restaurants Sections */}
             <View
               style={{
-                // borderWidth: 1,
-                flex: 1,
+                flexDirection: "row",
+                justifyContent: "space-between",
+                gap: 10,
               }}
             >
               <TouchableOpacity
                 style={{
-                  backgroundColor: "#FDEAFF",
-                  paddingVertical: 20,
+                  backgroundColor: "#EAFFF0",
+                  // paddingVertical: 20,
                   borderRadius: 10,
                   marginBottom: 10,
+                  // borderWidth: 1,
+
+                  // padding: 30,
+                  width: "45%",
+                  justifyContent: "center",
+                  paddingVertical: 30,
+
+                  // paddingHorizontal: 30,
+                  // alignSelf: "center",
                 }}
               >
-                <View
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    alignSelf: "center",
-                  }}
-                >
-                  <Image
-                    source={{
-                      uri: "https://s3-alpha-sig.figma.com/img/de83/e010/9d7f0465473f1920b8ac765eb8ea253e?Expires=1732492800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=H8KeCnjbciX2hDWR5klMUwplX4tnHM6om9SZ8K~RjkNZFypw0lhS7~OQOVr2uVtCiUEUfmG6EcVHEbBE32a4zRckgS48mrMySRV2tsgzdyKL9CJrd8aPvXYjYhOaTTnZYIAYW8i1AOyBSKtpnVMrBhneaUpbxbKNi5Q54qpjUCEkdQGe1mYVDjTF43eam~5Wn91rcHX5CAP5siMjDNCB0Bu8X1j0HvDsZVeBwZypMfBzdqrsDZIQIC3n9LLGsfn4R2Sdw4l841vj57VYCaUiUpCb0RzpT7jdvngOI3lbfvx1oj8ZHfd2xeS2sQhsD5adLdDg92PERvaK7VyG-NYj-g__",
-                    }} // Replace with discount image URL
-                    style={styles.optionIcon}
-                  />
-                  <Text style={styles.optionText}>Discounts</Text>
-                </View>
+                <Image
+                  source={{
+                    uri: "https://s3-alpha-sig.figma.com/img/3005/73e8/9b4dfc9c71ce79042ae61d3f3f1284ed?Expires=1733702400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=jXTW92thGBXj5EbIktXYrCm~n5eYsriebhawNjkg1Mo3f22eclhoylz5lItcwZC1B5RM9qiIJKAcT3FGRkgpoVgcoBoDnAnzk36Fa~ZpuWl47ujbS2O-BcM5vpY5EUPSLGGtCVhGdx354Sb6Q6oa6ZZBRIBnnxGitA2WsEWMiRmg9YmJfK4zV3~HwJO3WpILKVoGVAzMSLL6kwCLHfk2Vqspm20SpG9jaSaXutAU6yf~PL77KselZiAwQ8lnIP2El4SJPQiRoeCUntkg9PdHZbkmXJmHlOrV634x5JGrvAjz-XgEERmirhmjJpkZBm6kjiz~8nYFP0kNfHyFk0s-SQ__",
+                  }} // Replace with discount image URL
+                  style={styles.optionIcon}
+                />
+                <Text style={styles.optionText}>Menu</Text>
               </TouchableOpacity>
+
               <TouchableOpacity
                 style={{
-                  backgroundColor: "#FFEAEA",
-                  paddingVertical: 20,
+                  backgroundColor: "#EAF0FF",
+                  // paddingVertical: 20,
                   borderRadius: 10,
                   marginBottom: 10,
+                  paddingVertical: 30,
+
+                  // borderWidth: 1,
+
+                  // padding: 30,
+                  // paddingHorizontal: 50,
+                  width: "45%",
                 }}
-                onPress={() => navigation.navigate("MainHomescreen")}
               >
-                <View
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    alignSelf: "center",
-                  }}
-                >
-                  <Image
-                    source={{
-                      uri: "https://s3-alpha-sig.figma.com/img/ee77/dadf/2ce413b72e9acde68de20afc7bef46ff?Expires=1732492800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=FQNR0mEF-9~OKcypt4SJczM6UBieekdKI3M4GDVhPcoWyD14USHrNFaoEo0l5Yxge1XtN036UYzwsyAj~E1UZ1dEVkm9qhvO7rDAuLIHP67uV7FnAisM8nqeLjQA~X484LeCoE630-0h6J4tNAEDswc1csY3EI2e3ho8fT78Zuwmen9ACIALHeGm8F~JDJ9-KV2wqktWnf6bh2Ow5f7duAo4BpDUNRsq59VVHXLnUtcqYoEl8QuIwFKZ4t4lEcYOl4fE0VG0a~CHJJxgAlWGEyFLeiv~DI~o7uiVs7-v9YOB6GScjTethgdMwoXjY7aIn~3qmryOWqathk0naytOmQ__",
-                    }} // Replace with restaurant image URL
-                    style={styles.optionIcon}
-                  />
-                  <Text style={styles.optionText}>Restaurants</Text>
-                </View>
+                <Image
+                  source={{
+                    uri: "https://s3-alpha-sig.figma.com/img/3005/73e8/9b4dfc9c71ce79042ae61d3f3f1284ed?Expires=1733702400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=jXTW92thGBXj5EbIktXYrCm~n5eYsriebhawNjkg1Mo3f22eclhoylz5lItcwZC1B5RM9qiIJKAcT3FGRkgpoVgcoBoDnAnzk36Fa~ZpuWl47ujbS2O-BcM5vpY5EUPSLGGtCVhGdx354Sb6Q6oa6ZZBRIBnnxGitA2WsEWMiRmg9YmJfK4zV3~HwJO3WpILKVoGVAzMSLL6kwCLHfk2Vqspm20SpG9jaSaXutAU6yf~PL77KselZiAwQ8lnIP2El4SJPQiRoeCUntkg9PdHZbkmXJmHlOrV634x5JGrvAjz-XgEERmirhmjJpkZBm6kjiz~8nYFP0kNfHyFk0s-SQ__",
+                  }} // Replace with discount image URL
+                  style={styles.optionIcon}
+                />
+                <Text style={styles.optionText}>Orders</Text>
               </TouchableOpacity>
             </View>
-          </>
+          </View>
         )}
         {notification === "cart" && <CartScreen />}
         {notification === "account" && (
@@ -230,12 +229,15 @@ const styles = StyleSheet.create({
     color: "#888",
   },
   promoContainer: {
-    backgroundColor: "#eaf7ff",
+    backgroundColor: "#FFEAEA",
     borderRadius: 8,
     padding: 16,
+    paddingVertical: 30,
     marginBottom: 16,
     alignItems: "center",
     flexDirection: "row",
+    justifyContent: "center",
+    gap: 10,
   },
   promoText: {
     color: "#333",
@@ -276,13 +278,16 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   optionIcon: {
-    width: 80,
-    height: 80,
-    marginBottom: 8,
+    width: 56,
+    height: 56,
+    alignSelf: "center",
+    // marginBottom: 8,
   },
   optionText: {
-    fontWeight: "bold",
-    color: "#333",
+    fontWeight: "400",
+    color: "#CC5600",
+    fontSize: 24,
+    textAlign: "center",
   },
 });
 
