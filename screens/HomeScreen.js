@@ -127,6 +127,7 @@ const HomeScreen = () => {
               }}
             >
               <TouchableOpacity
+              onPress={() => navigation.navigate("Menu")}
                 style={{
                   backgroundColor: "#EAFFF0",
                   // paddingVertical: 20,
