@@ -14,15 +14,16 @@ const Account = ({ onCLose }) => {
   const navigation = useNavigation();
   const menuItems = [
     {
+      title: "Business Information",
+      icon: <Feather name="user" size={24} color={maincolors.primary} />,
+      screen: "PersonalInfomationScreen",
+    },
+    {
       title: "Orders",
       icon: <Feather name="shopping-bag" size={24} color="#FFA500" />,
       screen: "DeliveredOrders",
     },
-    {
-      title: "Personal Information",
-      icon: <Feather name="user" size={24} color={maincolors.primary} />,
-      screen: "PersonalInfomationScreen",
-    },
+
     {
       title: "Favorites",
       icon: <Feather name="heart" size={24} color={maincolors.primary} />,
