@@ -99,16 +99,16 @@ export const NavigationScreen = () => {
   // const isAuth = useSelector((state) => state);
   const dispatch = useDispatch();
 
-  const user = useSelector((state) => state.Auth);
-  const { user_data } = useSelector((state) => state.Auth);
+  // const user = useSelector((state) => state.Auth);
+  // const { user_data } = useSelector((state) => state.Auth);
 
-  const [country, setCountry] = useState("Loading...");
+  // const [country, setCountry] = useState("Loading...");
 
-  console.log({
-    kkkk: user_data?.data?.token,
-  });
+  // console.log({
+  //   kkkk: user_data?.data?.token,
+  // });
 
-  dispatch(reset_login());
+  // dispatch(reset_login());
   return (
     <NavigationContainer>
       {/* <StartScreen /> */}

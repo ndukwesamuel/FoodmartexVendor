@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   TextInput,
   Modal,
+  ScrollView
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { ReusableBackButton } from "../../components/shared/SharedButton_Icon";
@@ -48,36 +49,96 @@ export default function Menu() {
     },
   ]);
 
-  const renderItem = ({ item }) => (
-    <TouchableOpacity
-      style={styles.card}
-      onPress={() => navigation.navigate("MenuDetails")}
-    >
-      <View style={{ flex: 1, gap: 8 }}>
-        <Text style={styles.foodName}>{item.name}</Text>
-        <Text style={styles.description}>{item.description}</Text>
-        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-          <Text style={styles.price}>{item.price}</Text>
-          <View style={styles.actionIcons}>
-            <TouchableOpacity
-              onPress={() => navigation.navigate("MenuDetails")}
-            >
-              <Icon name="create-outline" size={24} color="#FFA500" />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => navigation.navigate("MenuDetails")}
-            >
-              <Icon name="trash-outline" size={24} color="red" />
-            </TouchableOpacity>
+  const [CategoriesItem, setCategoriesItem] = useState([
+    {
+      id: "1",
+      MainTitle: "SPECIAL MEALS",
+    },
+    {
+      id: "2",
+      MainTitle: "MAIN MEALS",
+    },
+    {
+      id: "3",
+      MainTitle: "DRINKS",
+    },
+  ]);
+
+  const SubDataRenderItemFunction = ({item}) => {
+    return (
+      <TouchableOpacity
+        style={styles.card(options)}
+      >
+        <View style={{ flex: 1, gap: 8 }}>
+          <Text style={styles.foodName(selectedOption)}>{item.name}</Text>
+          <Text style={styles.description}>{item.description}</Text>
+          <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+            <Text style={styles.price}>{item.price}</Text>
           </View>
         </View>
-      </View>
-      <Image source={{ uri: item.image }} style={styles.foodImage} />
-    </TouchableOpacity>
+        <Image source={{ uri: item.image }} style={styles.foodImage} />
+      </TouchableOpacity>
+    )
+  }
+
+  const renderItem = ({ item }) => (
+    <>
+    {selectedOption == "All Foods"? (
+      <TouchableOpacity
+        style={styles.card(options)}
+        onPress={() => navigation.navigate("MenuDetails")}
+      >
+        <View style={{ flex: 1, gap: 8 }}>
+          <Text style={styles.foodName(selectedOption)}>{item.name}</Text>
+          <Text style={styles.description}>{item.description}</Text>
+          <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+            <Text style={styles.price}>{item.price}</Text>
+            <View style={styles.actionIcons}>
+              <TouchableOpacity
+                onPress={() => navigation.navigate("MenuDetails")}
+              >
+                <Icon name="create-outline" size={24} color="#FFA500" />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => navigation.navigate("MenuDetails")}
+              >
+                <Icon name="trash-outline" size={24} color="red" />
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+        <Image source={{ uri: item.image }} style={styles.foodImage} />
+      </TouchableOpacity>
+    ): (
+      <TouchableOpacity
+      style={styles.card}>
+        <View style={{ flex: 1 }}>
+          <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+            <Text style={styles.foodName(selectedOption)}>{item.MainTitle}</Text>
+            <View style={styles.actionIcons}>
+              <TouchableOpacity
+                onPress={() => navigation.navigate("MenuDetails")}
+              >
+                <Icon name="create-outline" size={24} color="#FFA500" />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => navigation.navigate("MenuDetails")}
+              >
+                <Icon name="trash-outline" size={24} color="red" />
+              </TouchableOpacity>
+            </View>
+          </View>
+          <FlatList 
+          data={menuItems}
+          renderItem={(subData) => <SubDataRenderItemFunction item={subData.item}/>}/>
+        </View>
+      </TouchableOpacity>
+    )}
+    </>
   );
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
         <View>
@@ -138,12 +199,12 @@ export default function Menu() {
 
       {/* Food List */}
       <FlatList
-        data={menuItems}
+        data={selectedOption == "All Foods" ? menuItems : CategoriesItem }
         keyExtractor={(item) => item.id}
         renderItem={renderItem}
         contentContainerStyle={{ paddingBottom: 20, gap: 16, marginTop: 20 }}
       />
-    </View>
+    </ScrollView>
   );
 }
 
@@ -168,19 +229,20 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     fontSize: 16,
   },
-  card: {
+  card: (option) =>  ({
     flexDirection: "row",
     backgroundColor: "#fff",
     padding: 10,
     marginBottom: 10,
-    elevation: 2,
+    elevation: option == "All Foods" ? 2 : 0,
     gap: 20,
-  },
-  foodName: {
+  }),
+  foodName: (data) => ({
     fontSize: 18,
     fontWeight: "400",
-    color: "#F79B2C",
-  },
+    color: data == "All Foods" ? "#F79B2C" : "#000",
+    marginBottom: data == "All Foods" ? 0 : 4
+  }),
   description: {
     fontSize: 12,
     color: "#686868",
