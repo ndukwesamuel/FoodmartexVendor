@@ -65,6 +65,23 @@ export default function Menu() {
     },
   ]);
 
+  const SubDataRenderItemFunction = ({item}) => {
+    return (
+      <TouchableOpacity
+        style={styles.card(options)}
+      >
+        <View style={{ flex: 1, gap: 8 }}>
+          <Text style={styles.foodName(selectedOptionLink)}>{item.name}</Text>
+          <Text style={styles.description}>{item.description}</Text>
+          <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+            <Text style={styles.price}>{item.price}</Text>
+          </View>
+        </View>
+        <Image source={{ uri: item.image }} style={styles.foodImage} />
+      </TouchableOpacity>
+    )
+  }
+
   const renderItem = ({ item }) => (
     <>
     {selectedOption == "All Foods"? (
