@@ -289,10 +289,10 @@ export default function AddFoodItem() {
               </TouchableOpacity>
             </View>
           </View>
+          <View style={styles.divider} />
         </View>
       )}
       {/* </Modal> */}
-      <View style={styles.divider} />
 
       {/* Add a Section */}
       <TouchableOpacity
