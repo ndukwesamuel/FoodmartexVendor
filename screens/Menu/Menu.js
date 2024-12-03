@@ -154,8 +154,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   header: {
-    // flexDirection: "row",
-    // alignItems: "center",
     justifyContent: "center",
     marginVertical: 16,
   },
@@ -175,7 +173,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     padding: 10,
     marginBottom: 10,
-    // borderRadius: 10,
     elevation: 2,
     gap: 20,
   },
@@ -188,7 +185,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: "#686868",
     fontWeight: "300",
-    // marginVertical: 4,
   },
   price: {
     fontSize: 16,
@@ -199,7 +195,6 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     borderRadius: 10,
-    // marginLeft: 10,
   },
   actionIcons: {
     flexDirection: "row",
