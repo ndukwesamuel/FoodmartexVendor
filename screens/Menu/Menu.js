@@ -13,6 +13,7 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { ReusableBackButton } from "../../components/shared/SharedButton_Icon";
+import AllCategories from "./AllCategories";
 export default function Menu() {
   const navigation = useNavigation();
   const [isOpen, setIsOpen] = useState(true);
@@ -64,23 +65,6 @@ export default function Menu() {
     },
   ]);
 
-  const SubDataRenderItemFunction = ({item}) => {
-    return (
-      <TouchableOpacity
-        style={styles.card(options)}
-      >
-        <View style={{ flex: 1, gap: 8 }}>
-          <Text style={styles.foodName(selectedOption)}>{item.name}</Text>
-          <Text style={styles.description}>{item.description}</Text>
-          <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-            <Text style={styles.price}>{item.price}</Text>
-          </View>
-        </View>
-        <Image source={{ uri: item.image }} style={styles.foodImage} />
-      </TouchableOpacity>
-    )
-  }
-
   const renderItem = ({ item }) => (
     <>
     {selectedOption == "All Foods"? (
@@ -110,20 +94,17 @@ export default function Menu() {
         <Image source={{ uri: item.image }} style={styles.foodImage} />
       </TouchableOpacity>
     ): (
+      // <AllCategories styles={styles} item={item} menuItems={menuItems} selectedOptionLink={selectedOption}/>
       <TouchableOpacity
       style={styles.card}>
         <View style={{ flex: 1 }}>
           <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
             <Text style={styles.foodName(selectedOption)}>{item.MainTitle}</Text>
             <View style={styles.actionIcons}>
-              <TouchableOpacity
-                onPress={() => navigation.navigate("MenuDetails")}
-              >
+              <TouchableOpacity>
                 <Icon name="create-outline" size={24} color="#FFA500" />
               </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => navigation.navigate("MenuDetails")}
-              >
+              <TouchableOpacity>
                 <Icon name="trash-outline" size={24} color="red" />
               </TouchableOpacity>
             </View>
