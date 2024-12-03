@@ -24,17 +24,17 @@ const PersonalInfomationScreen = ({ onClose }) => {
     {
       title: "My Details",
       icon: <Feather name="user" size={24} color="#FFA500" />,
-      screen: "PersonalInfomationScreen",
+      screen: "VendorDetail",
     },
     {
       title: "Manage cards",
       icon: <Feather name="credit-card" size={24} color="#FFA500" />,
-      screen: "WalletScreen",
+      screen: "BankDetail",
     },
     {
       title: "Change Password",
       icon: <AntDesign name="lock1" size={24} color="#FFA500" />,
-      screen: "ChangePassword",
+      screen: "ChangePassowrd",
     },
 
     {

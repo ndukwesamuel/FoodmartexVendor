@@ -65,13 +65,13 @@ export default function Wallet() {
           </TouchableOpacity>
         </View>
         <View style={styles.buttonContainer}>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={styles.button}
             onPress={() => navigation.navigate("TopupScreen")}
           >
             <Image source={require("../../assets/Foodmart/top-up.png")} />
             <Text style={styles.buttonText}>Top Up</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           <TouchableOpacity
             style={styles.button}
             onPress={() => navigation.navigate("WithdrawalScreen")}
