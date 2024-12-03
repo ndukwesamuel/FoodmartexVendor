@@ -32,6 +32,10 @@ import CompleteOrder from "../screens/UserScreens/CompleteOrder";
 import UpdatePassword from "../screens/Detail/updatePassword";
 import CancelDelivery from "../screens/UserScreens/CancelDelivery";
 import OrderStatus from "../screens/UserScreens/OrderStatus";
+import Menu from "../screens/Menu/Menu";
+import MenuDetails from "../screens/Menu/MenuDetails";
+import AddFoodItem from "../screens/Menu/AddFoodItem";
+import NewCategory from "../screens/Menu/NewCategory";
 // import DeliveredOrders from "../screens/Orders/DeliveredOrders";
 const Stack = createNativeStackNavigator();
 
@@ -48,6 +52,12 @@ export default function UserNavigation() {
         name="RestaurantMenuScreen"
         component={RestaurantMenuScreen}
       />
+
+      {/* Menu screen starts here */}
+      <Stack.Screen name="Menu" component={Menu} />
+      <Stack.Screen name="MenuDetails" component={MenuDetails} />
+      <Stack.Screen name="AddFoodItem" component={AddFoodItem} />
+      <Stack.Screen name="NewCategory" component={NewCategory} />
 
       <Stack.Screen name="FoodDetails" component={FoodDetails} />
       <Stack.Screen name="GetEverything" component={GetEverythingPage} />
