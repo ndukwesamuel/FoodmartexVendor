@@ -36,6 +36,9 @@ import Menu from "../screens/Menu/Menu";
 import MenuDetails from "../screens/Menu/MenuDetails";
 import AddFoodItem from "../screens/Menu/AddFoodItem";
 import NewCategory from "../screens/Menu/NewCategory";
+import VendorDetailsPage from "../screens/vendorDetail/vendorDetailPage";
+import BankDetailsPage from "../screens/vendorDetail/bankDetailPage";
+import SavedAddresses from "../screens/vendorDetail/addressesPage";
 // import DeliveredOrders from "../screens/Orders/DeliveredOrders";
 const Stack = createNativeStackNavigator();
 
@@ -82,7 +85,10 @@ export default function UserNavigation() {
       <Stack.Screen name="PointHistory" component={SecondRewardScreen} />
       <Stack.Screen name="Detail" component={DetailsPage} />
       {/* <Stack.Screen name="Detail" component={DetailsPage} />? */}
+      <Stack.Screen name="VendorDetail" component={VendorDetailsPage}/>
       <Stack.Screen name="updatePassword" component={UpdatePassword} />
+      <Stack.Screen name="BankDetail" component={BankDetailsPage}/>
+      <Stack.Screen name="Addresses" component={SavedAddresses}/>
 
       {/* the order screen end here */}
 
