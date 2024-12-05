@@ -77,6 +77,7 @@ export default function UserNavigation() {
       <Stack.Screen name="DeliveredOrders" component={DeliveredOrders} />
       <Stack.Screen name="MyFavorite" component={MyFavorite} />
       <Stack.Screen name="MyOrder" component={MyOrder} />
+      <Stack.Screen name="AllOrders" component={MyOrder} />
 
       <Stack.Screen name="FirstRewardPage" component={FirstRewardScreen} />
       {/* <Stack.Screen name="SecondRewardPage" component={SecondRewardScreen} /> */}

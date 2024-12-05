@@ -16,13 +16,30 @@ import { useDispatch, useSelector } from "react-redux";
 import { Login_Fun } from "../../Redux/AuthSlice";
 import { maincolors } from "../../utills/Themes";
 
-const SignIn = ({ navigation, onSetAuth }) => {
-  const user_dat = useSelector((state) => state.Auth);
+const SignIn = ({ navigation, setAuthType }) => {
+  const { user_isLoading } = useSelector((state) => state.Auth);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
   const dispatch = useDispatch();
+
+  console.log({
+    email,
+    password,
+    user_isLoading,
+  });
+
+  const handleLogin = () => {
+    dispatch(
+      Login_Fun({
+        email: email, //"vendor@gmail.com",
+        password: password, // "password",
+        device_name: "mobile",
+      })
+    );
+  };
+
   return (
     <AppscreenLogo>
       <View
@@ -90,7 +107,7 @@ const SignIn = ({ navigation, onSetAuth }) => {
           <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
         </TouchableOpacity>
 
-        {user_dat?.user_isLoading ? (
+        {user_isLoading ? (
           <ActivityIndicator size="small" color={maincolors.primary} />
         ) : (
           <TouchableOpacity
@@ -112,7 +129,7 @@ const SignIn = ({ navigation, onSetAuth }) => {
           style={styles.signUpContainer}
           // onPress={() => navigation.navigate("Signup")}
 
-          onPress={() => onSetAuth("sign-up")}
+          onPress={() => setAuthType("signin")}
         >
           <Text style={styles.signUpText}>
             Don’t have an Account?{" "}

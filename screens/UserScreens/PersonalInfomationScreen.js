@@ -41,7 +41,7 @@ const PersonalInfomationScreen = ({ onClose }) => {
       title: "Saved Addresses",
 
       icon: <EvilIcons name="location" size={24} color={maincolors.primary} />,
-      screen: "SavedAddresses",
+      screen: "Addresses",
     },
   ];
 

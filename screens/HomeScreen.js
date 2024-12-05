@@ -127,7 +127,7 @@ const HomeScreen = () => {
               }}
             >
               <TouchableOpacity
-              onPress={() => navigation.navigate("Menu")}
+                onPress={() => navigation.navigate("Menu")}
                 style={{
                   backgroundColor: "#EAFFF0",
                   // paddingVertical: 20,
@@ -156,17 +156,13 @@ const HomeScreen = () => {
               <TouchableOpacity
                 style={{
                   backgroundColor: "#EAF0FF",
-                  // paddingVertical: 20,
                   borderRadius: 10,
                   marginBottom: 10,
                   paddingVertical: 30,
 
-                  // borderWidth: 1,
-
-                  // padding: 30,
-                  // paddingHorizontal: 50,
                   width: "45%",
                 }}
+                onPress={() => navigation.navigate("MyOrder")}
               >
                 <Image
                   source={{

@@ -31,7 +31,7 @@ console.log({
   ddd: API_BASEURL,
 });
 
-const OtpScreen = ({ navigation, onSetAuth, onSetAuth2 }) => {
+const OtpScreen = ({ Close, onSetAuth, onSetAuth2 }) => {
   const { otpemail, otp: otpdata } = useSelector(
     (state) => state?.OnboardingSlice
   );
@@ -162,9 +162,9 @@ const OtpScreen = ({ navigation, onSetAuth, onSetAuth2 }) => {
           width: 35,
         }}
         onPress={() => {
-          console.log("this is otpemail", otpemail);
-          dispatch(checkOtp(false));
-          onSetAuth("sign-in");
+          // console.log("this is otpemail", otpemail);
+          // dispatch(checkOtp(false));
+          // onSetAuth("sign-in");
           dispatch(reset_login());
         }}
       >
@@ -299,7 +299,7 @@ const OtpScreen = ({ navigation, onSetAuth, onSetAuth2 }) => {
             }
           >
             <Text style={styles.resend}>
-              Resending OTP in 50 seconds
+              Resend Otp
               {/* <Text style={{ fontWeight: "500" }}>Resend</Text> */}
               {Resend_Mutation.isLoading && (
                 <ActivityIndicator color="blue" size="small" />
