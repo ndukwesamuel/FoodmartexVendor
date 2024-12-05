@@ -40,6 +40,7 @@ import VendorDetailsPage from "../screens/vendorDetail/vendorDetailPage";
 import BankDetailsPage from "../screens/vendorDetail/bankDetailPage";
 import SavedAddresses from "../screens/vendorDetail/addressesPage";
 import ChangePassowrd from "../components/Auth/ChangePassowrd";
+import AllOrder from "../screens/Orders/AllOrder";
 // import DeliveredOrders from "../screens/Orders/DeliveredOrders";
 const Stack = createNativeStackNavigator();
 
@@ -77,7 +78,7 @@ export default function UserNavigation() {
       <Stack.Screen name="DeliveredOrders" component={DeliveredOrders} />
       <Stack.Screen name="MyFavorite" component={MyFavorite} />
       <Stack.Screen name="MyOrder" component={MyOrder} />
-      <Stack.Screen name="AllOrders" component={MyOrder} />
+      <Stack.Screen name="AllOrders" component={AllOrder} />
 
       <Stack.Screen name="FirstRewardPage" component={FirstRewardScreen} />
       {/* <Stack.Screen name="SecondRewardPage" component={SecondRewardScreen} /> */}

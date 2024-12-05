@@ -129,7 +129,7 @@ const SignIn = ({ navigation, setAuthType }) => {
           style={styles.signUpContainer}
           // onPress={() => navigation.navigate("Signup")}
 
-          onPress={() => setAuthType("signin")}
+          onPress={() => setAuthType("signup")}
         >
           <Text style={styles.signUpText}>
             Don’t have an Account?{" "}

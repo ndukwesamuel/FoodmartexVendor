@@ -140,6 +140,8 @@ const MainScreen = () => {
     return () => {};
   }, []);
 
+  return <UserNavigation />;
+
   if (!user_data?.meta?.onboarding?.has_verified_email_or_mobile_number) {
     return <OtpScreen Close={logoutData} />;
   }

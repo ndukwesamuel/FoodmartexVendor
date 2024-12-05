@@ -25,10 +25,10 @@ const AuthOnboarding = ({ setAuthType }) => {
           <View style={{ justifyContent: "center", marginLeft: 25 }}>
             <TouchableOpacity
               style={styles.button}
-              // onPress={() => {
-              //   // setStart(true); // Toggle start state to true
-              //   // navigation.navigate("Login");
-              // }}
+              onPress={() => {
+                setAuthType("signup"); // Toggle start state to true
+                // navigation.navigate("Signup");
+              }}
             >
               <Text style={styles.buttonText}>Sign Up</Text>
             </TouchableOpacity>

@@ -162,7 +162,7 @@ const HomeScreen = () => {
 
                   width: "45%",
                 }}
-                onPress={() => navigation.navigate("MyOrder")}
+                onPress={() => navigation.navigate("AllOrders")}
               >
                 <Image
                   source={{

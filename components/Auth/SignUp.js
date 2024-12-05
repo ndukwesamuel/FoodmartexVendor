@@ -26,17 +26,20 @@ const SignUp = ({ onSetAuth }) => {
   const dispatch = useDispatch();
 
   const [formData, setFormData] = useState({
-    email: "",
+    business_name: "",
+    business_registration_number: "",
+    business_address: "",
     password: "",
-    name: "",
-    mobile_number: "",
-    phoneNumber: "",
-    homeAddress: "",
-    referral_code: "",
-    gender: "",
-    occupation: "",
-    hobbies: "",
-    dob: new Date(), // Initial DOB
+    password_confirmation: "",
+    contact_person_name: "",
+    contact_person_email: "",
+    contact_person_mobile_number: "",
+    state_id: "",
+    lga_id: "",
+    emergency_number: "",
+    device_name: "",
+
+    /// stop
   });
 
   const [showDatePicker, setShowDatePicker] = useState(false);
@@ -175,10 +178,12 @@ const SignUp = ({ onSetAuth }) => {
           >
             {/** Full Name */}
             <View style={styles.inputContainer}>
-              <Text style={styles.labels}>Full Name</Text>
+              <Text style={styles.labels}>Business Name</Text>
               <Forminput
-                placeholder="Full Name"
-                onChangeText={(text) => handleInputChange("name", text)}
+                placeholder="Business Name"
+                onChangeText={(text) =>
+                  handleInputChange("business_name", text)
+                }
                 value={formData.name}
                 style={styles.input}
               />
@@ -186,10 +191,12 @@ const SignUp = ({ onSetAuth }) => {
 
             {/** Email */}
             <View style={styles.inputContainer}>
-              <Text style={styles.labels}>Email</Text>
+              <Text style={styles.labels}>Business Registration Number</Text>
               <Forminput
-                placeholder="Email"
-                onChangeText={(text) => handleInputChange("email", text)}
+                placeholder="Business Registration Number"
+                onChangeText={(text) =>
+                  handleInputChange("business_registration_number", text)
+                }
                 value={formData.email}
                 style={styles.input}
               />
@@ -197,11 +204,47 @@ const SignUp = ({ onSetAuth }) => {
 
             {/** Mobile Number */}
             <View style={styles.inputContainer}>
-              <Text style={styles.labels}>Mobile Number</Text>
+              <Text style={styles.labels}>Business Address</Text>
               <Forminput
-                placeholder="Mobile Number"
+                placeholder="Business Address"
                 onChangeText={(text) =>
-                  handleInputChange("mobile_number", text)
+                  handleInputChange("business_address", text)
+                }
+                value={formData.mobile_number}
+                style={styles.input}
+              />
+            </View>
+
+            <View style={styles.inputContainer}>
+              <Text style={styles.labels}>Contact Person’s Name</Text>
+              <Forminput
+                placeholder="Contact Person’s Name"
+                onChangeText={(text) =>
+                  handleInputChange("contact_person_name", text)
+                }
+                value={formData.mobile_number}
+                style={styles.input}
+              />
+            </View>
+
+            <View style={styles.inputContainer}>
+              <Text style={styles.labels}> Contact Person’s Email</Text>
+              <Forminput
+                placeholder="Contact Person’s Email"
+                onChangeText={(text) =>
+                  handleInputChange("contact_person_email", text)
+                }
+                value={formData.mobile_number}
+                style={styles.input}
+              />
+            </View>
+
+            <View style={styles.inputContainer}>
+              <Text style={styles.labels}> Contact Person’s Mobile Number</Text>
+              <Forminput
+                placeholder="Contact Person’s Mobile Number"
+                onChangeText={(text) =>
+                  handleInputChange("contact_person_mobile_number", text)
                 }
                 value={formData.mobile_number}
                 style={styles.input}
@@ -223,95 +266,13 @@ const SignUp = ({ onSetAuth }) => {
                   },
                 ]}
               >
-                <Text style={styles.labels}>Gender</Text>
+                <Text style={styles.labels}>City</Text>
                 <Pressable onPress={openGenderModal} style={styles.input}>
-                  <Text style={{ color: formData.gender ? "black" : "gray" }}>
-                    {formData.gender || "Select Gender"}
+                  <Text style={{ color: formData.state_id ? "black" : "gray" }}>
+                    {formData?.state_id || "Select State"}
                   </Text>
                 </Pressable>
               </View>
-
-              <View style={styles.inputContainer}>
-                <Text style={styles.labels}>Date of Birth (optional)</Text>
-                <Pressable onPress={() => setShowDatePicker(true)}>
-                  <Text style={styles.input}>
-                    {formData.dob.toDateString()}
-                  </Text>
-                </Pressable>
-                {showDatePicker && (
-                  <DateTimePicker
-                    value={formData.dob}
-                    mode="date"
-                    display="default"
-                    onChange={onChangeDOB}
-                  />
-                )}
-              </View>
-            </View>
-
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                gap: 10,
-              }}
-            >
-              <View
-                style={[
-                  styles.inputContainer,
-                  {
-                    width: "40%",
-                  },
-                ]}
-              >
-                <Text style={styles.labels}>Occupation (optional)</Text>
-                <Forminput
-                  placeholder="Occupation"
-                  onChangeText={(text) => handleInputChange("occupation", text)}
-                  value={formData.occupation}
-                  style={styles.input}
-                />
-              </View>
-              <View
-                style={[
-                  styles.inputContainer,
-                  {
-                    width: "50%",
-                  },
-                ]}
-              >
-                <Text style={styles.labels}>Hobbies (optional)</Text>
-                <Forminput
-                  placeholder="Hobbies"
-                  onChangeText={(text) => handleInputChange("hobbies", text)}
-                  value={formData.hobbies}
-                  style={styles.input}
-                />
-              </View>
-            </View>
-
-            {/** Home Address */}
-            <View style={styles.inputContainer}>
-              <Text style={styles.labels}>Home Address</Text>
-              <Forminput
-                placeholder="Home Address"
-                onChangeText={(text) => handleInputChange("homeAddress", text)}
-                value={formData.homeAddress}
-                style={styles.input}
-              />
-            </View>
-
-            {/** Referral Code */}
-            <View style={styles.inputContainer}>
-              <Text style={styles.labels}>Referral Code (If Applicable)</Text>
-              <Forminput
-                placeholder="Referral Code"
-                onChangeText={(text) =>
-                  handleInputChange("referral_code", text)
-                }
-                value={formData.referral_code}
-                style={styles.input}
-              />
             </View>
 
             {/** Password */}
