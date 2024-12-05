@@ -25,7 +25,7 @@ const Account = ({ onCLose }) => {
     },
 
     {
-      title: "Favorites",
+      title: "Menu",
       icon: <Feather name="heart" size={24} color={maincolors.primary} />,
       screen: "MyFavorite",
     },

@@ -99,22 +99,17 @@ export const NavigationScreen = () => {
   // const isAuth = useSelector((state) => state);
   const dispatch = useDispatch();
 
-  // const user = useSelector((state) => state.Auth);
-  // const { user_data } = useSelector((state) => state.Auth);
+  const user = useSelector((state) => state.Auth);
+  const { user_data } = useSelector((state) => state.Auth);
 
   // const [country, setCountry] = useState("Loading...");
-
-  // console.log({
-  //   kkkk: user_data?.data?.token,
-  // });
 
   // dispatch(reset_login());
   return (
     <NavigationContainer>
-      {/* <StartScreen /> */}
-      {/* {user_data?.data?.token && <MainScreen />}
-      {!user_data?.data?.token && <StartScreen />}  */}
-      <UserNavigation />
+      {user_data?.data?.token && <MainScreen />}
+      {!user_data?.data?.token && <StartScreen />}
+
       <Toast />
     </NavigationContainer>
   );
@@ -131,31 +126,71 @@ const MainScreen = () => {
     kk: user_profile_data?.data?.has_default_address,
   });
 
+  console.log({
+    klk: user_data?.meta?.onboarding,
+  });
+
+  const logoutData = () => {
+    console.log("this is me");
+  };
+
   useEffect(() => {
     dispatch(UserProfile_Fun());
 
     return () => {};
   }, []);
 
-  const isRegistered =
-    user_profile_data?.data?.has_filled_security_question !== false;
-  //  &&
-  // user_profile_data?.data?.has_default_address !== false;
+  return <UserNavigation />;
 
-  console.log({
-    ddd: isRegistered,
-  });
+  if (!user_data?.meta?.onboarding?.has_verified_email_or_mobile_number) {
+    return <OtpScreen Close={logoutData} />;
+  }
 
-  if (isRegistered) {
-    return <UserNavigation />;
-  } else {
+  if (!user_data?.meta?.onboarding?.has_filled_delivery_and_packaging) {
     return (
-      <>
-        {!user_profile_data?.data?.has_filled_security_question && <Security />}
-        {/* {!user_profile_data?.data?.has_default_address && <Security />} */}
-      </>
+      <View>
+        <Text>Please fill in your delivery and packaging details</Text>
+      </View>
     );
   }
+
+  if (!user_data?.meta?.onboarding?.has_filled_bank_details) {
+    return (
+      <View>
+        <Text>Please fill in your bank details</Text>
+      </View>
+    );
+  }
+
+  if (!user_data?.meta?.onboarding?.has_filled_food_satefy_certification) {
+    return (
+      <View>
+        <Text>Please fill in your food safety certification details</Text>
+      </View>
+    );
+  }
+
+  if (!user_data?.meta?.onboarding?.has_filled_opening_hours) {
+    return (
+      <View>
+        <Text>Please fill in your opening hours</Text>
+      </View>
+    );
+  }
+
+  if (!user_data?.meta?.onboarding?.has_uploaded_cac_document) {
+    return (
+      <View>
+        <Text>Please upload your CAC document</Text>
+      </View>
+    );
+  }
+
+  return (
+    <View>
+      <Text>Welcome! All required steps are complete.</Text>
+    </View>
+  );
 };
 
 const BeforeLOginScreen = () => {
