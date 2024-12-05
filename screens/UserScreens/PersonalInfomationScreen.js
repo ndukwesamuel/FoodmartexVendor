@@ -27,7 +27,7 @@ const PersonalInfomationScreen = ({ onClose }) => {
       screen: "VendorDetail",
     },
     {
-      title: "Manage cards",
+      title: "Bank Details",
       icon: <Feather name="credit-card" size={24} color="#FFA500" />,
       screen: "BankDetail",
     },
