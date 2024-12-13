@@ -72,7 +72,9 @@ export const UserProfile_Fun = createAsyncThunk(
         },
       };
       const response = await axios.get(`${API_BASEURL}v1/profile`, config);
-
+      console.log({
+        oooo: response.data,
+      });
       return response.data;
     } catch (error) {
       const errorMessage = handleApiError(error);

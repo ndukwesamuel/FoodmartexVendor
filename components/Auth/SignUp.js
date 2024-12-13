@@ -7,10 +7,11 @@ import {
   ScrollView,
   ActivityIndicator,
   Modal,
+  TouchableWithoutFeedback,
 } from "react-native";
 import Toast from "react-native-toast-message";
 import axios from "axios";
-import { useMutation } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { checkOtp, setOtpEmail } from "../../Redux/OnboardingSlice";
@@ -21,7 +22,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 
 const API_BASEURL = process.env.EXPO_PUBLIC_API_URL;
 
-const SignUp = ({ onSetAuth }) => {
+const SignUp = ({ setAuthType }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
@@ -35,12 +36,38 @@ const SignUp = ({ onSetAuth }) => {
     contact_person_email: "",
     contact_person_mobile_number: "",
     state_id: "",
+    state_name: "",
     lga_id: "",
+    lga_name: "",
     emergency_number: "",
     device_name: "",
 
     /// stop
   });
+  const [isStateModalVisible, setStateModalVisible] = useState(false);
+
+  const [city_date, setcity_date] = useState(null);
+
+  const openStateModal = () => {
+    setStateModalVisible(true);
+  };
+
+  const selectState = (state) => {
+    setcity_date(state);
+    handleInputChange("state_id", state.id); // or state.id if needed
+    handleInputChange("state_name", state.name); // or state.id if needed
+    setStateModalVisible(false);
+  };
+
+  const selectLga = (item) => {
+    console.log({
+      what: item,
+    });
+
+    handleInputChange("lga_name", item.name); // or state.id if needed
+    handleInputChange("lga_id", item.id); // or state.id if needed
+    // setStateModalVisible(false);
+  };
 
   const [showDatePicker, setShowDatePicker] = useState(false);
 
@@ -63,7 +90,7 @@ const SignUp = ({ onSetAuth }) => {
   };
   const Registration_Mutation = useMutation(
     (data_info) => {
-      const url = `${API_BASEURL}register`;
+      const url = `${API_BASEURL}v1/vendor/register`;
       const config = {
         headers: {
           "Content-Type": "application/json",
@@ -86,14 +113,13 @@ const SignUp = ({ onSetAuth }) => {
           text1: `${success?.data?.message}`,
         });
 
-        dispatch(checkOtp(true));
+        // dispatch(checkOtp(true));
 
-        onSetAuth("otp");
+        // onSetAuth("otp");
       },
       onError: (error) => {
         console.log({
           ddd: error?.response?.data,
-          ddd: error?.response?.data?.errors,
         });
         Toast.show({
           type: "error",
@@ -103,53 +129,55 @@ const SignUp = ({ onSetAuth }) => {
     }
   );
 
+  const {
+    data: states,
+    isLoading: statesLoading,
+    error: statesError,
+  } = useQuery("states", async () => {
+    const response = await axios.get(`${API_BASEURL}v1/states`);
+    return response.data.data;
+  });
+
   const handleSignUp = () => {
     const {
-      name,
+      business_name,
+      business_registration_number,
+      business_address,
       password,
-      email,
-      mobile_number,
-      gender,
-      dob,
-      occupation,
-      hobbies,
-      referral_code,
-      homeAddress,
+      password_confirmation,
+      contact_person_name,
+      contact_person_email,
+      contact_person_mobile_number,
+      state_id,
+      state_name,
+      lga_id,
+      lga_name,
+      emergency_number,
+      device_name,
     } = formData;
 
-    let newmail = email.toLowerCase();
+    let newmail = contact_person_email.toLowerCase();
     dispatch(setOtpEmail(newmail));
 
     console.log({
       jdjdj: formData,
     });
 
-    console.log({
-      name,
-      email,
-      mobile_number,
-      gender,
-      date_of_birth: dob,
-      occupation,
-      referral_code,
-      hobbies,
-      password,
-      password_confirmation: password,
-      homeAddress,
-    });
     Registration_Mutation.mutate({
-      name,
-      email: email.toLowerCase(),
-      mobile_number,
-      gender,
-      date_of_birth: dob,
-      occupation,
-      referral_code,
-      hobbies,
+      business_name,
+      business_registration_number,
+      business_address,
       password,
       password_confirmation: password,
-      homeAddress,
-      user_type: "customer",
+      contact_person_name,
+      contact_person_email,
+      contact_person_mobile_number,
+      state_id,
+      state_name,
+      lga_id,
+      lga_name,
+      emergency_number,
+      device_name: "Test Device",
     });
   };
 
@@ -258,6 +286,16 @@ const SignUp = ({ onSetAuth }) => {
                 gap: 10,
               }}
             >
+              <View style={styles.inputContainer}>
+                <Text style={styles.labels}>State</Text>
+                <Pressable onPress={openStateModal} style={styles.input}>
+                  <Text
+                    style={{ color: formData.state_name ? "black" : "gray" }}
+                  >
+                    {formData.state_name || "Select State"}
+                  </Text>
+                </Pressable>
+              </View>
               <View
                 style={[
                   styles.inputContainer,
@@ -268,8 +306,8 @@ const SignUp = ({ onSetAuth }) => {
               >
                 <Text style={styles.labels}>City</Text>
                 <Pressable onPress={openGenderModal} style={styles.input}>
-                  <Text style={{ color: formData.state_id ? "black" : "gray" }}>
-                    {formData?.state_id || "Select State"}
+                  <Text style={{ color: formData.lga_name ? "black" : "gray" }}>
+                    {formData?.lga_name || "Select State"}
                   </Text>
                 </Pressable>
               </View>
@@ -296,11 +334,15 @@ const SignUp = ({ onSetAuth }) => {
                 <Text style={styles.buttonText}>Sign Up</Text>
               )}
             </Pressable>
-            <Pressable>
+            <Pressable
+              style={{
+                marginTop: 10,
+              }}
+            >
               <Text style={styles.footerText}>
                 Already have an Account?
                 <Text
-                  onPress={() => onSetAuth("sign-in")}
+                  onPress={() => setAuthType("signin")}
                   style={styles.loginText}
                 >
                   Sign In
@@ -309,6 +351,49 @@ const SignUp = ({ onSetAuth }) => {
             </Pressable>
           </View>
         </View>
+        <Modal
+          transparent={true}
+          visible={isStateModalVisible}
+          onRequestClose={() => setStateModalVisible(false)}
+        >
+          <TouchableWithoutFeedback onPress={() => setStateModalVisible(false)}>
+            <View style={styles.modalOverlay}>
+              <TouchableWithoutFeedback>
+                <View style={styles.modalContainer}>
+                  <Text
+                    style={{
+                      textAlign: "center",
+                    }}
+                  >
+                    Select State
+                  </Text>
+                  {statesLoading ? (
+                    <ActivityIndicator size="large" />
+                  ) : (
+                    <ScrollView
+                      contentContainerStyle={styles.scrollViewContent}
+                    >
+                      {states.map((state) => (
+                        <Pressable
+                          key={state.id}
+                          onPress={() => {
+                            selectState(state);
+                            setStateModalVisible(false); // Close modal after selecting a state
+                          }}
+                          style={styles.modalOption}
+                        >
+                          <Text style={styles.modalOptionText}>
+                            {state.name}
+                          </Text>
+                        </Pressable>
+                      ))}
+                    </ScrollView>
+                  )}
+                </View>
+              </TouchableWithoutFeedback>
+            </View>
+          </TouchableWithoutFeedback>
+        </Modal>
 
         {/* Gender Modal */}
         <Modal
@@ -316,20 +401,32 @@ const SignUp = ({ onSetAuth }) => {
           visible={isGenderModalVisible}
           onRequestClose={() => setGenderModalVisible(false)}
         >
-          <View style={styles.modalOverlay}>
-            <View style={styles.modalContainer}>
-              <Text style={styles.modalHeader}>Select Gender</Text>
-              {["male", "female"].map((option) => (
-                <Pressable
-                  key={option}
-                  onPress={() => selectGender(option)}
-                  style={styles.modalOption}
-                >
-                  <Text style={styles.modalOptionText}>{option}</Text>
-                </Pressable>
-              ))}
+          <TouchableWithoutFeedback
+            onPress={() => setGenderModalVisible(false)}
+          >
+            <View style={styles.modalOverlay}>
+              <TouchableWithoutFeedback>
+                <View style={styles.modalContainer}>
+                  <Text style={styles.modalHeader}>Select LGA</Text>
+                  <ScrollView contentContainerStyle={styles.scrollViewContent}>
+                    {city_date?.lgas.map((item) => (
+                      <Pressable
+                        key={item?.id}
+                        onPress={() => {
+                          // selectGender(option);
+                          selectLga(item);
+                          setGenderModalVisible(false); // Close modal on selection
+                        }}
+                        style={styles.modalOption}
+                      >
+                        <Text style={styles.modalOptionText}>{item?.name}</Text>
+                      </Pressable>
+                    ))}
+                  </ScrollView>
+                </View>
+              </TouchableWithoutFeedback>
             </View>
-          </View>
+          </TouchableWithoutFeedback>
         </Modal>
       </ScrollView>
     </AppscreenLogo>
@@ -398,6 +495,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 10,
     padding: 20,
+    height: "60%",
   },
   modalHeader: {
     fontSize: 18,

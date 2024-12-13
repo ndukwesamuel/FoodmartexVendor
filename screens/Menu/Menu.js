@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -14,13 +14,25 @@ import {
 import Icon from "react-native-vector-icons/Ionicons";
 import { ReusableBackButton } from "../../components/shared/SharedButton_Icon";
 import AppScreen from "../../components/shared/AppScreen";
+import { useDispatch, useSelector } from "react-redux";
+import { Get_All_Menu_Fun } from "../../Redux/MenuSlice";
 export default function Menu() {
   const navigation = useNavigation();
   const [isOpen, setIsOpen] = useState(true);
   const [isDropdownVisible, setDropdownVisible] = useState(false);
   const [selectedOption, setSelectedOption] = useState("All Foods");
-
+  const { menu_data } = useSelector((state) => state.MenuSlice);
   const options = ["All Foods", "All Categories"];
+  const dispatch = useDispatch();
+
+  console.log({
+    lllfff: menu_data,
+  });
+
+  useEffect(() => {
+    dispatch(Get_All_Menu_Fun());
+    return () => {};
+  }, []);
 
   const handleSelect = (option) => {
     setSelectedOption(option);
@@ -212,12 +224,30 @@ export default function Menu() {
           </Modal>
         </View>
 
-        {/* Food List */}
+        {/* Food List
         <FlatList
           data={selectedOption == "All Foods" ? menuItems : CategoriesItem}
           keyExtractor={(item) => item.id}
           renderItem={renderItem}
           contentContainerStyle={{ paddingBottom: 20, gap: 16, marginTop: 20 }}
+        
+        
+        
+        /> */}
+
+        <FlatList
+          data={menu_data}
+          // data={selectedOption == "All Foods" ? menuItems : CategoriesItem}
+          keyExtractor={(item) => item.id}
+          renderItem={renderItem}
+          contentContainerStyle={{ paddingBottom: 20, gap: 16, marginTop: 20 }}
+          ListEmptyComponent={
+            <View style={{ alignItems: "center", marginTop: 20 }}>
+              <Text style={{ fontSize: 16, color: "#888" }}>
+                No items available
+              </Text>
+            </View>
+          }
         />
       </ScrollView>
     </AppScreen>

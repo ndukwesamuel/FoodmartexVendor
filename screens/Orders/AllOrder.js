@@ -9,12 +9,15 @@ import {
   FlatList,
   Pressable,
   SafeAreaView,
+  TouchableOpacity,
 } from "react-native";
 import { ReusableBackButton } from "../../components/shared/SharedButton_Icon";
 import { ReusableTitle } from "../../components/shared/Reuseablecomponent";
 import AppScreen from "../../components/shared/AppScreen";
+import { useNavigation } from "@react-navigation/native";
 
 export default function AllOrder() {
+  const navigation = useNavigation();
   const orders = [
     {
       id: "E8F99P",
@@ -67,15 +70,17 @@ export default function AllOrder() {
         elevation: 2,
       }}
     >
-      <Text style={{ color: "red", fontWeight: "bold", marginBottom: 8 }}>
-        {item.status}
-      </Text>
-      <Text style={{ fontSize: 16, fontWeight: "bold" }}>
-        Order ID: {item.id}
-      </Text>
-      <Text style={{ color: "#666", fontSize: 14, marginBottom: 8 }}>
-        {item.date} | {item.time}
-      </Text>
+      <TouchableOpacity onPress={() => navigation.navigate("MyOrder")}>
+        <Text style={{ color: "red", fontWeight: "bold", marginBottom: 8 }}>
+          {item.status}
+        </Text>
+        <Text style={{ fontSize: 16, fontWeight: "bold" }}>
+          Order ID: {item.id}
+        </Text>
+        <Text style={{ color: "#666", fontSize: 14, marginBottom: 8 }}>
+          {item.date} | {item.time}
+        </Text>
+      </TouchableOpacity>
       <View
         style={{
           height: 1,

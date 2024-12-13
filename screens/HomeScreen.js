@@ -18,9 +18,17 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import Account from "../components/Auth/Account";
 import CartScreen from "../components/CartScreen";
+import { useSelector } from "react-redux";
 const HomeScreen = () => {
   const navigation = useNavigation();
+  const { user_data, user_isLoading, user_profile_data } = useSelector(
+    (state) => state?.Auth
+  );
 
+  console.log({
+    mxmxOne: user_profile_data?.data?.name,
+    // mxmxOne: user_profile_data,
+  });
   const [showaccount, setShowaccount] = useState(false);
 
   const [notification, setnotification] = useState("home");
@@ -49,7 +57,9 @@ const HomeScreen = () => {
           <TouchableOpacity onPress={() => setnotification("account")}>
             <Image
               source={{
-                uri: "https://s3-alpha-sig.figma.com/img/9265/f6e3/e22a4d011fdf9bee1bc447fd54300962?Expires=1733702400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=DJstDRZyzM8SPgw~rxOWWk6UQQXvtjM73QA9SnQ34mdW-0RlWzwMhJJRdVdo0NI5YZXSp7Xe~jQxKExk7rLFTFhQev4IBH55Ok0vbC8ABCk7Kl9g-4axNOKc5p~qUUK9mvoODmjb8fTIP2jPPIUT4vLauhnrYkf6JzvPvapnZpxXdqBGZIoZOPpwtuph4ARUkYckYWGuNPBpAUQfvLSVNgkQNsaJc95ZKfnOwo4fic~un8FxAuNU76on51nhXSoI1fX2of-naJYGUovOpcBMZwMuQKr2sdipSMOTJcMmsmZihOT6vVmxd23epbBeLZ~tBedyUmphCKxfFHoLs7AOzA__",
+                uri:
+                  user_profile_data?.data?.profile_picture_url ||
+                  "https://s3-alpha-sig.figma.com/img/9265/f6e3/e22a4d011fdf9bee1bc447fd54300962?Expires=1733702400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=DJstDRZyzM8SPgw~rxOWWk6UQQXvtjM73QA9SnQ34mdW-0RlWzwMhJJRdVdo0NI5YZXSp7Xe~jQxKExk7rLFTFhQev4IBH55Ok0vbC8ABCk7Kl9g-4axNOKc5p~qUUK9mvoODmjb8fTIP2jPPIUT4vLauhnrYkf6JzvPvapnZpxXdqBGZIoZOPpwtuph4ARUkYckYWGuNPBpAUQfvLSVNgkQNsaJc95ZKfnOwo4fic~un8FxAuNU76on51nhXSoI1fX2of-naJYGUovOpcBMZwMuQKr2sdipSMOTJcMmsmZihOT6vVmxd23epbBeLZ~tBedyUmphCKxfFHoLs7AOzA__",
               }} // Replace with profile picture URL
               style={styles.profileImage}
             />
@@ -95,7 +105,9 @@ const HomeScreen = () => {
 
             {/* Greeting Section */}
             <View>
-              <Text style={styles.greetingText}>Hello User,</Text>
+              <Text style={styles.greetingText}>
+                Hello {user_profile_data?.data?.name},
+              </Text>
             </View>
 
             <View style={styles.promoContainer}>
@@ -199,6 +211,7 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: 20,
     marginRight: 8,
+    borderWidth: 1,
   },
   searchInput: {
     flex: 1,

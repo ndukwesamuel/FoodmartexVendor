@@ -49,7 +49,7 @@ const Stack = createNativeStackNavigator();
 export default function UserNavigation() {
   return (
     <Stack.Navigator
-      initialRouteName="OrderHistory"
+      initialRouteName="Home"
       screenOptions={{ headerShown: false }}
     >
       <Stack.Screen name="OrderHistory" component={OrderHistory} />
@@ -66,7 +66,7 @@ export default function UserNavigation() {
       <Stack.Screen name="AddFoodItem" component={AddFoodItem} />
       <Stack.Screen name="NewCategory" component={NewCategory} />
 
-      <Stack.Screen name="FoodDetails" component={FoodDetails} />
+      {/* <Stack.Screen name="FoodDetails" component={FoodDetails} /> not needed */}
       <Stack.Screen name="GetEverything" component={GetEverythingPage} />
       <Stack.Screen name="CheckoutPage" component={CheckoutPage} />
 

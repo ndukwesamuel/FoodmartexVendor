@@ -93,10 +93,6 @@ const SignIn = ({ navigation, setAuthType }) => {
 
               // borderColor: "#ccc",
             }}
-            // onChangeText={(text) =>
-            //   handlePasswordChange("confirmPassword", text)
-            // }
-            // value={passwords.confirmPassword}
           />
         </View>
 

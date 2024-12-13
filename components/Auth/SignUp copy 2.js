@@ -548,9 +548,9 @@ const SignUp = ({ onSetAuth }) => {
               value={formData.business_name}
               style={styles.input}
             />
-            <View style={styles.inputContainer}>
-              {" "}
-              <Text style={styles.labels}>Referral Code (If Applicable)</Text>
+
+//             <View style={styles.inputContainer}>
+//               <Text style={styles.labels}>Referral Code (If Applicable)</Text>
               <Forminput
                 placeholder="Referral Code"
                 onChangeText={(text) =>

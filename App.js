@@ -122,13 +122,9 @@ const MainScreen = () => {
 
   const dispatch = useDispatch();
 
-  console.log({
-    kk: user_profile_data?.data?.has_default_address,
-  });
-
-  console.log({
-    klk: user_data?.meta?.onboarding,
-  });
+  // console.log({
+  //   whatyouhavenotdone: user_data?.meta?.onboarding,
+  // });
 
   const logoutData = () => {
     console.log("this is me");

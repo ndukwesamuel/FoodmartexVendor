@@ -4,12 +4,16 @@ import { persistStore, persistReducer } from "redux-persist";
 import { combineReducers } from "redux";
 import OnboardingSlice from "./OnboardingSlice";
 import AuthSlice from "./AuthSlice";
+import MenuSlice from "./MenuSlice";
+import categoriesSlice from "./categoriesSlice";
 
 // import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE } from "redux-persist";
 
 const reducers = combineReducers({
   OnboardingSlice: OnboardingSlice,
   Auth: AuthSlice,
+  MenuSlice: MenuSlice,
+  categoriesSlice: categoriesSlice,
 });
 
 const persistConfig = {
