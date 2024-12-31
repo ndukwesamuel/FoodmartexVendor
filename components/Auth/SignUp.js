@@ -14,7 +14,11 @@ import axios from "axios";
 import { useMutation, useQuery } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
-import { checkOtp, setOtpEmail } from "../../Redux/OnboardingSlice";
+import {
+  checkOtp,
+  setOtpEmail,
+  setOtptoken,
+} from "../../Redux/OnboardingSlice";
 import { Forminput, Forminputpassword } from "../shared/InputForm";
 import { maincolors } from "../../utills/Themes";
 import AppscreenLogo from "../shared/AppscreenLogo";
@@ -108,14 +112,15 @@ const SignUp = ({ setAuthType }) => {
           ksksk: success?.data?.data,
           ksksk: success?.data?.message,
         });
+
+        dispatch(setOtptoken(success?.data));
         Toast.show({
           type: "success",
           text1: `${success?.data?.message}`,
         });
 
         // dispatch(checkOtp(true));
-
-        // onSetAuth("otp");
+        setAuthType("otp");
       },
       onError: (error) => {
         console.log({
@@ -159,10 +164,6 @@ const SignUp = ({ setAuthType }) => {
     let newmail = contact_person_email.toLowerCase();
     dispatch(setOtpEmail(newmail));
 
-    console.log({
-      jdjdj: formData,
-    });
-
     Registration_Mutation.mutate({
       business_name,
       business_registration_number,
@@ -170,7 +171,7 @@ const SignUp = ({ setAuthType }) => {
       password,
       password_confirmation: password,
       contact_person_name,
-      contact_person_email,
+      contact_person_email: newmail,
       contact_person_mobile_number,
       state_id,
       state_name,

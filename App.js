@@ -28,6 +28,14 @@ import OtpScreen from "./screens/OtpScreen";
 import UserNavigation from "./Navigation/UserNavigation";
 import Security from "./components/Auth/Security";
 import { UserProfile_Fun, reset_login } from "./Redux/AuthSlice";
+import {
+  BankDetails,
+  DeliveryAndPackaging,
+  FoodSafetyCertification,
+  OpeningHours,
+  StepTwoSignUp,
+  UploadCACDocument,
+} from "./components/Auth/VendorSignup";
 
 const queryClient = new QueryClient();
 
@@ -115,78 +123,55 @@ export const NavigationScreen = () => {
   );
 };
 
+const VerifyEmailOrMobile = () => (
+  <View>
+    <Text>Please verify your email or mobile number.</Text>
+  </View>
+);
+
 const MainScreen = () => {
-  const { user_data, user_isLoading, user_profile_data } = useSelector(
+  const { user_profile_data, user_isLoading } = useSelector(
     (state) => state?.Auth
   );
-
   const dispatch = useDispatch();
-
-  // console.log({
-  //   whatyouhavenotdone: user_data?.meta?.onboarding,
-  // });
-
-  const logoutData = () => {
-    console.log("this is me");
-  };
 
   useEffect(() => {
     dispatch(UserProfile_Fun());
+  }, [dispatch]);
 
-    return () => {};
-  }, []);
-
-  return <UserNavigation />;
-
-  if (!user_data?.meta?.onboarding?.has_verified_email_or_mobile_number) {
-    return <OtpScreen Close={logoutData} />;
-  }
-
-  if (!user_data?.meta?.onboarding?.has_filled_delivery_and_packaging) {
+  if (user_isLoading) {
     return (
       <View>
-        <Text>Please fill in your delivery and packaging details</Text>
+        <Text>Loading...</Text>
       </View>
     );
   }
 
-  if (!user_data?.meta?.onboarding?.has_filled_bank_details) {
-    return (
-      <View>
-        <Text>Please fill in your bank details</Text>
-      </View>
-    );
-  }
+  const onboarding = user_profile_data?.meta[0]?.onboarding;
+  console.log({
+    kgkg: onboarding,
+  });
+  // Mapping keys to their corresponding components
+  const onboardingComponents = {
+    has_verified_email_or_mobile_number: <OtpScreen />,
+    has_filled_bank_details: <BankDetails />,
+    has_filled_food_satefy_certification: <FoodSafetyCertification />,
+    has_uploaded_cac_document: <UploadCACDocument />,
+    has_filled_opening_hours: <OpeningHours />,
+    has_filled_delivery_and_packaging: <DeliveryAndPackaging />,
+  };
 
-  if (!user_data?.meta?.onboarding?.has_filled_food_satefy_certification) {
-    return (
-      <View>
-        <Text>Please fill in your food safety certification details</Text>
-      </View>
-    );
-  }
-
-  if (!user_data?.meta?.onboarding?.has_filled_opening_hours) {
-    return (
-      <View>
-        <Text>Please fill in your opening hours</Text>
-      </View>
-    );
-  }
-
-  if (!user_data?.meta?.onboarding?.has_uploaded_cac_document) {
-    return (
-      <View>
-        <Text>Please upload your CAC document</Text>
-      </View>
-    );
-  }
-
-  return (
-    <View>
-      <Text>Welcome! All required steps are complete.</Text>
-    </View>
+  // Find the first unmet onboarding step
+  const unmetStep = Object.keys(onboardingComponents).find(
+    (key) => onboarding && !onboarding[key]
   );
+
+  if (unmetStep) {
+    return onboardingComponents[unmetStep];
+  }
+
+  // If all steps are complete, show the main navigation
+  return <UserNavigation />;
 };
 
 const BeforeLOginScreen = () => {

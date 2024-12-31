@@ -49,7 +49,7 @@ export default function NewCategory() {
     <View style={styles.container}>
       <View style={styles.header}>
         <View>
-          <Text style={styles.title}>New Category</Text>
+          <Text style={styles.title}>New Category </Text>
           <ReusableBackButton style={{ position: "absolute", left: 10 }} />
         </View>
       </View>

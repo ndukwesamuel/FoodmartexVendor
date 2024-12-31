@@ -31,13 +31,15 @@ console.log({
   ddd: API_BASEURL,
 });
 
-const OtpScreen = ({ Close, onSetAuth, onSetAuth2 }) => {
-  const { otpemail, otp: otpdata } = useSelector(
-    (state) => state?.OnboardingSlice
-  );
+const OtpScreen = ({ setAuthType, Close, onSetAuth, onSetAuth2 }) => {
+  const {
+    Otptoken,
+    otpemail,
+    otp: otpdata,
+  } = useSelector((state) => state?.OnboardingSlice);
   const dispatch = useDispatch();
   console.log({
-    otpdata,
+    Otptoken,
   });
   const [code, setCode] = useState("");
   const [loading, setLoading] = useState(false);
@@ -58,11 +60,13 @@ const OtpScreen = ({ Close, onSetAuth, onSetAuth2 }) => {
 
   const Resend_Mutation = useMutation(
     (data_info) => {
-      let url = `${API_BASEURL}api/auth/send-otp`;
+      let url = `${API_BASEURL}send-verification-otp`;
 
       let datas = {
-        email: otpemail,
-        otp: code,
+        // email: otpemail,
+        // otp: code,
+
+        identifier: otpemail, //"oladejifavour100@gmail.com",
       };
       console.log({
         datas,
@@ -102,11 +106,12 @@ const OtpScreen = ({ Close, onSetAuth, onSetAuth2 }) => {
 
   const Otp_Mutation = useMutation(
     (data_info) => {
-      let url = `${API_BASEURL}send-verification-otp`;
+      let url = `${API_BASEURL}verify-otp`;
 
       let datas = {
         // email: otpemail,
         code: code,
+        identifier: otpemail, //"oladejifavour100@gmail.com"
       };
       console.log({
         datas,
@@ -121,7 +126,7 @@ const OtpScreen = ({ Close, onSetAuth, onSetAuth2 }) => {
         },
       };
 
-      // return axios.post(url, datas, config);
+      return axios.post(url, datas, config);
     },
     {
       onSuccess: (success) => {
@@ -130,15 +135,24 @@ const OtpScreen = ({ Close, onSetAuth, onSetAuth2 }) => {
           text1: `${success?.data?.message} `,
         });
 
-        dispatch(checkOtp(false));
-        dispatch(reset_otpemail());
-        dispatch(reset_login());
-        onSetAuth("sign-in");
+        if (setAuthType) {
+          console.log("this me");
+          setAuthType("signin");
+          dispatch(checkOtp(false));
+          dispatch(reset_otpemail());
+          dispatch(reset_login());
+        } else {
+          dispatch(checkOtp(false));
+          dispatch(reset_otpemail());
+          dispatch(reset_login());
+        }
+
+        // onSetAuth("sign-in");
       },
 
       onError: (error) => {
         console.log({
-          error: error,
+          james: error?.response.data,
         });
         Toast.show({
           type: "error",
@@ -162,10 +176,14 @@ const OtpScreen = ({ Close, onSetAuth, onSetAuth2 }) => {
           width: 35,
         }}
         onPress={() => {
-          // console.log("this is otpemail", otpemail);
-          // dispatch(checkOtp(false));
-          // onSetAuth("sign-in");
-          dispatch(reset_login());
+          if (setAuthType) {
+            console.log("this me");
+            setAuthType("signin");
+          } else {
+            console.log("kdkdkdk");
+            dispatch(reset_login());
+          }
+          // dispatch(reset_login());
         }}
       >
         <Ionicons name="arrow-back-sharp" size={24} color="black" />

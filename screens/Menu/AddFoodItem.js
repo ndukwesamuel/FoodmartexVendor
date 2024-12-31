@@ -28,12 +28,15 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import axios from "axios";
 import Toast from "react-native-toast-message";
 import { useMutation } from "react-query";
+import { useNavigation } from "@react-navigation/native";
+import { Get_All_Menu_Fun } from "../../Redux/MenuSlice";
 const API_BASEURL = process.env.EXPO_PUBLIC_API_URL;
 
 export default function AddFoodItem() {
   const { categories_data, categories_isLoading } = useSelector(
     (state) => state.categoriesSlice
   );
+  const navigation = useNavigation();
 
   console.log({
     kkk: categories_data,
@@ -120,20 +123,20 @@ export default function AddFoodItem() {
     formData.append("description", description);
     formData.append("price", price);
     formData.append("preparation_time", preparationTime);
-    formData.append("has_extra_portion", isExtraPortionAvailable);
+    formData.append("has_extra_portion", isExtraPortionAvailable ? 1 : 0);
 
     if (image) {
       const uri = image;
       const type = "image/jpeg"; // Adjust the type based on the file type
       const name = "photo.jpg"; // Adjust the name as needed
-      formData.append("images[0]", { uri, type, name });
+      formData.append("images[]", { uri, type, name });
     }
 
     if (image) {
       const uri = image;
       const type = "image/jpeg"; // Adjust the type based on the file type
       const name = "photo.jpg"; // Adjust the name as needed
-      formData.append("images[1]", { uri, type, name });
+      formData.append("images[]", { uri, type, name });
     }
 
     Orders_Mutation.mutate(formData);
@@ -165,6 +168,10 @@ export default function AddFoodItem() {
           type: "success",
           text1: "User Profile Updated successfully!",
         });
+
+        dispatch(Get_All_Menu_Fun());
+
+        navigation.goBack();
         // dispatch(UserProfile_data_Fun());
       },
 

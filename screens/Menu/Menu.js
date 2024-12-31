@@ -22,6 +22,7 @@ export default function Menu() {
   const [isDropdownVisible, setDropdownVisible] = useState(false);
   const [selectedOption, setSelectedOption] = useState("All Foods");
   const { menu_data } = useSelector((state) => state.MenuSlice);
+
   const options = ["All Foods", "All Categories"];
   const dispatch = useDispatch();
 
@@ -101,8 +102,11 @@ export default function Menu() {
           style={styles.card(options)}
           onPress={() => navigation.navigate("MenuDetails")}
         >
+          {console.log({
+            jjsss: item,
+          })}
           <View style={{ flex: 1, gap: 8 }}>
-            <Text style={styles.foodName(selectedOption)}>{item.name}</Text>
+            <Text style={styles.foodName(selectedOption)}>{item?.name}</Text>
             <Text style={styles.description}>{item.description}</Text>
             <View
               style={{ flexDirection: "row", justifyContent: "space-between" }}
@@ -122,7 +126,10 @@ export default function Menu() {
               </View>
             </View>
           </View>
-          <Image source={{ uri: item.image }} style={styles.foodImage} />
+          <Image
+            source={{ uri: item?.default_image?.original_url }}
+            style={styles.foodImage}
+          />
         </TouchableOpacity>
       ) : (
         <TouchableOpacity style={styles.card}>

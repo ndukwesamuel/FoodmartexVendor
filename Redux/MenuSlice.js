@@ -50,10 +50,8 @@ export const Get_All_Menu_Fun = createAsyncThunk(
 
     try {
       const response = await fetchResponsData(url, thunkAPI);
-      console.log({
-        uuuu: response.data,
-      });
-      // return response?.data;
+
+      return response?.data;
     } catch (error) {
       console.log({ error });
       return thunkAPI.rejectWithValue(
