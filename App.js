@@ -130,7 +130,7 @@ const VerifyEmailOrMobile = () => (
 );
 
 const MainScreen = () => {
-  const { user_profile_data, user_isLoading } = useSelector(
+  const { user_profile_data, user_isLoading, user_data } = useSelector(
     (state) => state?.Auth
   );
   const dispatch = useDispatch();
@@ -147,9 +147,12 @@ const MainScreen = () => {
     );
   }
 
+  console.log({
+    kakakaak: user_profile_data?.data,
+  });
   const onboarding = user_profile_data?.meta[0]?.onboarding;
   console.log({
-    kgkg: onboarding,
+    ghgh: onboarding,
   });
   // Mapping keys to their corresponding components
   const onboardingComponents = {
