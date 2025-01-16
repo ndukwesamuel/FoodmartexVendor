@@ -148,12 +148,12 @@ const MainScreen = () => {
   }
 
   console.log({
-    kakakaak: user_profile_data?.data,
+    jajaj: user_profile_data?.data,
   });
   const onboarding = user_profile_data?.meta[0]?.onboarding;
-  console.log({
-    ghgh: onboarding,
-  });
+  // console.log({
+  //   ghgh: onboarding,
+  // });
   // Mapping keys to their corresponding components
   const onboardingComponents = {
     has_verified_email_or_mobile_number: <OtpScreen />,
