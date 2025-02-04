@@ -52,6 +52,8 @@
       "favicon": "./assets/favicon.png"
     },
     "jsEngine": "hermes",
-    "extra": {}
+    "extra": {
+      "eas": {}
+    }
   }
 }

@@ -4,7 +4,8 @@ import { handleApiError } from "./shareApi";
 import axios from "axios";
 
 import Toast from "react-native-toast-message";
-const API_BASEURL = process.env.EXPO_PUBLIC_API_URL;
+// const API_BASEURL = "https://foodmart-backend.gigtech.site/api/"; // process.env.EXPO_PUBLIC_API_URL;
+const API_BASEURL = "https://foodmart-backend.gigtech.site/api/"; // process.env.EXPO_PUBLIC_API_URL;
 
 console.log({
   kdkd: API_BASEURL,
@@ -72,7 +73,9 @@ export const UserProfile_Fun = createAsyncThunk(
         },
       };
       const response = await axios.get(`${API_BASEURL}v1/profile`, config);
-
+      console.log({
+        oooo: response.data,
+      });
       return response.data;
     } catch (error) {
       const errorMessage = handleApiError(error);

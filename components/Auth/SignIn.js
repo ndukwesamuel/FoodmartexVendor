@@ -15,6 +15,7 @@ import { Forminput, Forminputpassword } from "../shared/InputForm";
 import { useDispatch, useSelector } from "react-redux";
 import { Login_Fun } from "../../Redux/AuthSlice";
 import { maincolors } from "../../utills/Themes";
+import { setOtpEmail } from "../../Redux/OnboardingSlice";
 
 const SignIn = ({ navigation, setAuthType }) => {
   const { user_isLoading } = useSelector((state) => state.Auth);
@@ -93,10 +94,6 @@ const SignIn = ({ navigation, setAuthType }) => {
 
               // borderColor: "#ccc",
             }}
-            // onChangeText={(text) =>
-            //   handlePasswordChange("confirmPassword", text)
-            // }
-            // value={passwords.confirmPassword}
           />
         </View>
 
@@ -112,14 +109,18 @@ const SignIn = ({ navigation, setAuthType }) => {
         ) : (
           <TouchableOpacity
             style={styles.signInButton}
-            onPress={() =>
+            onPress={() => {
+              let newmail = email.toLowerCase();
+
+              dispatch(setOtpEmail(newmail));
+
               dispatch(
                 Login_Fun({
-                  email,
+                  email: newmail,
                   password,
                 })
-              )
-            }
+              );
+            }}
           >
             <Text style={styles.signInButtonText}>Sign In</Text>
           </TouchableOpacity>

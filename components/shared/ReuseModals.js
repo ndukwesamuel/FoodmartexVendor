@@ -5,8 +5,30 @@ import {
   StyleSheet,
   TouchableWithoutFeedback,
   TouchableOpacity,
+  ScrollView,
 } from "react-native";
 import React from "react";
+
+export const MapReusableModal = ({
+  isVisible,
+  onClose,
+  headerText,
+  items,
+  onSelectItem,
+  renderItemText,
+  styles,
+  children,
+}) => {
+  return (
+    <Modal transparent={true} visible={isVisible} onRequestClose={onClose}>
+      <TouchableWithoutFeedback onPress={onClose}>
+        <View style={styles.modalOverlay}>
+          <TouchableWithoutFeedback>{children}</TouchableWithoutFeedback>
+        </View>
+      </TouchableWithoutFeedback>
+    </Modal>
+  );
+};
 
 export default function ReuseModals({ visible, children }) {
   return (

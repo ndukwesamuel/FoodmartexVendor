@@ -18,7 +18,7 @@ import { useMutation } from "react-query";
 import { checkOtp, setOtpEmail } from "../../Redux/OnboardingSlice";
 import { Forminput, Forminputpassword } from "../shared/InputForm";
 import { maincolors } from "../../utills/Themes";
-const API_BASEURL = process.env.EXPO_PUBLIC_API_URL;
+const API_BASEURL = "https://foodmart-backend.gigtech.site/api/"; // process.env.EXPO_PUBLIC_API_URL;
 
 const ForgetPassowrd = ({ onSetAuth }) => {
   const navigation = useNavigation();

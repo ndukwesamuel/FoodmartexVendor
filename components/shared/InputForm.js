@@ -14,18 +14,25 @@ import { Checkbox } from "expo-checkbox";
 import { MaterialIcons } from "@expo/vector-icons";
 
 import { Picker } from "@react-native-picker/picker"; //
-export const Forminput = ({ placeholder, onChangeText, value, style }) => {
+export const Forminput = ({
+  placeholder,
+  onChangeText,
+  value,
+  style,
+  keyboardType = "default",
+}) => {
   return (
     <View>
       <TextInput
         placeholder={placeholder}
+        keyboardType={keyboardType} // Added keyboardType prop
         onChangeText={onChangeText}
         value={value}
         style={{
           padding: 10,
           borderRadius: 5,
           fontSize: 16,
-          height:42,
+          height: 42,
           // backgroundColor: "#F6F8FAE5",
           ...style, // merge custom style passed as a prop
         }}
