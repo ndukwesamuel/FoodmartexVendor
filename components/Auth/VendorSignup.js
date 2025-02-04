@@ -34,7 +34,7 @@ import { CenterReuseModals, MapReusableModal } from "../shared/ReuseModals";
 import { MaterialIcons } from "@expo/vector-icons";
 import { UserProfile_Fun } from "../../Redux/AuthSlice";
 
-const API_BASEURL = process.env.EXPO_PUBLIC_API_URL;
+const API_BASEURL = "https://foodmart-backend.gigtech.site/api/"; // process.env.EXPO_PUBLIC_API_URL;
 
 const VendorSignup = ({ onSetAuth }) => {
   const navigation = useNavigation();

@@ -19,7 +19,7 @@
 // import AppscreenLogo from "../shared/AppscreenLogo";
 // import DateTimePicker from "@react-native-community/datetimepicker";
 
-// const API_BASEURL = process.env.EXPO_PUBLIC_API_URL;
+// const API_BASEURL = "https://foodmart-backend.gigtech.site/api/"; // process.env.EXPO_PUBLIC_API_URL;
 
 // const SignUp = ({ onSetAuth }) => {
 //   const navigation = useNavigation();
@@ -473,7 +473,7 @@ import { Forminput, Forminputpassword } from "../shared/InputForm";
 import { maincolors } from "../../utills/Themes";
 import AppscreenLogo from "../shared/AppscreenLogo";
 
-const API_BASEURL = process.env.EXPO_PUBLIC_API_URL;
+const API_BASEURL = "https://foodmart-backend.gigtech.site/api/"; // process.env.EXPO_PUBLIC_API_URL;
 
 const SignUp = ({ onSetAuth }) => {
   const navigation = useNavigation();
@@ -548,9 +548,10 @@ const SignUp = ({ onSetAuth }) => {
               value={formData.business_name}
               style={styles.input}
             />
-
-//             <View style={styles.inputContainer}>
-//               <Text style={styles.labels}>Referral Code (If Applicable)</Text>
+            //{" "}
+            <View style={styles.inputContainer}>
+              //{" "}
+              <Text style={styles.labels}>Referral Code (If Applicable)</Text>
               <Forminput
                 placeholder="Referral Code"
                 onChangeText={(text) =>

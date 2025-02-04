@@ -87,11 +87,11 @@ const HomeScreen = () => {
                 color="black"
               />
             </TouchableOpacity>
-            <TouchableOpacity
+            {/* <TouchableOpacity
               onPress={() => navigation.navigate("Notification")}
             >
               <Ionicons name="notifications-outline" size={24} color="black" />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
         </View>
         {notification === "home" && (

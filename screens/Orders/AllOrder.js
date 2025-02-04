@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   View,
   Text,
@@ -15,8 +15,19 @@ import { ReusableBackButton } from "../../components/shared/SharedButton_Icon";
 import { ReusableTitle } from "../../components/shared/Reuseablecomponent";
 import AppScreen from "../../components/shared/AppScreen";
 import { useNavigation } from "@react-navigation/native";
+import { useDispatch, useSelector } from "react-redux";
+import { Get_All_Vendor_Order_Fun } from "../../Redux/OrderSlice";
 
 export default function AllOrder() {
+  const dispatch = useDispatch();
+  const { vendor_order_data } = useSelector((state) => state.OrderSlice);
+
+  useEffect(() => {
+    dispatch(Get_All_Vendor_Order_Fun());
+
+    return () => {};
+  }, []);
+
   const navigation = useNavigation();
   const orders = [
     {
@@ -198,6 +209,25 @@ export default function AllOrder() {
             marginVertical: 20,
           }}
         >
+          {console.log({
+            kjkd: vendor_order_data?.length,
+          })}
+          {vendor_order_data?.length > 0 ? (
+            <FlatList
+              data={vendor_order_data}
+              renderItem={renderOrder}
+              keyExtractor={(item) => item.id}
+              contentContainerStyle={{
+                paddingHorizontal: 16,
+                paddingVertical: 8,
+              }}
+            />
+          ) : (
+            <Text style={{ textAlign: "center", marginTop: 20, fontSize: 20 }}>
+              No orders available.
+            </Text>
+          )}
+
           <FlatList
             data={orders}
             renderItem={renderOrder}

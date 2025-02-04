@@ -82,6 +82,9 @@ export default function Menu() {
 
   const renderItem = ({ item }) => (
     <>
+      {console.log({
+        ccc: item?.id,
+      })}
       {selectedOption == "All Foods" ? (
         <TouchableOpacity style={[styles.card, {}]}>
           <View style={{ flex: 1 }}>

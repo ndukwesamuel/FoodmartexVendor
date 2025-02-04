@@ -24,7 +24,7 @@ import { maincolors } from "../../utills/Themes";
 import AppscreenLogo from "../shared/AppscreenLogo";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
-const API_BASEURL = process.env.EXPO_PUBLIC_API_URL;
+const API_BASEURL = "https://foodmart-backend.gigtech.site/api/"; // process.env.EXPO_PUBLIC_API_URL;
 
 const SignUp = ({ setAuthType }) => {
   const navigation = useNavigation();

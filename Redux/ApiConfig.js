@@ -2,7 +2,7 @@ import axios from "axios";
 
 // Set up the base URL for Axios instance using environment variable
 // const apiUrl = import.meta.env.VITE_API_URL;
-const API_BASEURL = process.env.EXPO_PUBLIC_API_URL;
+const API_BASEURL = "https://foodmart-backend.gigtech.site/api/"; // process.env.EXPO_PUBLIC_API_URL;
 
 export const axiosInstance = axios.create({
   baseURL: API_BASEURL,

@@ -25,7 +25,7 @@ import {
 } from "../Redux/OnboardingSlice";
 import { reset_login } from "../Redux/AuthSlice";
 import { maincolors } from "../utills/Themes";
-const API_BASEURL = process.env.EXPO_PUBLIC_API_URL;
+const API_BASEURL = "https://foodmart-backend.gigtech.site/api/"; // process.env.EXPO_PUBLIC_API_URL;
 
 console.log({
   ddd: API_BASEURL,

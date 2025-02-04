@@ -5,7 +5,7 @@ import { handleApiError } from "./shareApi";
 import Toast from "react-native-toast-message";
 import { axiosInstance, getAxiosConfig, getToken } from "./ApiConfig";
 
-const API_BASEURL = process.env.EXPO_PUBLIC_API_URL;
+const API_BASEURL = "https://foodmart-backend.gigtech.site/api/"; // process.env.EXPO_PUBLIC_API_URL;
 
 const initialState = {
   menu_data: null,

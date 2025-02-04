@@ -30,17 +30,13 @@ import Toast from "react-native-toast-message";
 import { useMutation } from "react-query";
 import { useNavigation } from "@react-navigation/native";
 import { Get_All_Menu_Fun } from "../../Redux/MenuSlice";
-const API_BASEURL = process.env.EXPO_PUBLIC_API_URL;
+const API_BASEURL = "https://foodmart-backend.gigtech.site/api/"; // process.env.EXPO_PUBLIC_API_URL;
 
 export default function AddFoodItem() {
   const { categories_data, categories_isLoading } = useSelector(
     (state) => state.categoriesSlice
   );
   const navigation = useNavigation();
-
-  console.log({
-    kkk: categories_data,
-  });
 
   const { user_data } = useSelector((state) => state.Auth);
 
@@ -65,10 +61,6 @@ export default function AddFoodItem() {
   // Function to handle time change
 
   const selectCategories = (item) => {
-    console.log({
-      what: item,
-    });
-
     setCategory(item?.name);
     setCategory_id(item?.id);
   };
@@ -96,55 +88,95 @@ export default function AddFoodItem() {
     }
   };
 
-  console.log({
-    kk: isExtraPortionAvailable,
-  });
   // setImage(null);
+  // const handleUpload = () => {
+  //   if (!productName || !price || !category) {
+  //     Alert.alert("Error", "Please fill all required fields.");
+  //     return;
+  //   }
+  //   console.log("Form Data:", {
+  //     category,
+  //     productName,
+  //     description,
+  //     price,
+  //     preparationTime,
+  //     isExtraPortionAvailable,
+  //     image,
+  //   });
+
+  //   const formData = new FormData();
+
+  //   formData.append("name", productName);
+  //   // formData.append("photo", description);
+  //   formData.append("category_id", category_id);
+  //   formData.append("description", description);
+  //   formData.append("price", price);
+  //   formData.append("preparation_time", preparationTime);
+  //   formData.append("has_extra_portion", isExtraPortionAvailable ? 1 : 0);
+
+  //   if (image) {
+  //     const uri = image;
+  //     const type = "image/jpeg"; // Adjust the type based on the file type
+  //     const name = "photo.jpg"; // Adjust the name as needed
+  //     formData.append("images[]", { uri, type, name });
+  //   }
+
+  //   if (image) {
+  //     const uri = image;
+  //     const type = "image/jpeg"; // Adjust the type based on the file type
+  //     const name = "photo.jpg"; // Adjust the name as needed
+  //     formData.append("images[]", { uri, type, name });
+  //   }
+
+  //   Orders_Mutation.mutate(formData);
+  // };
+
   const handleUpload = () => {
     if (!productName || !price || !category) {
       Alert.alert("Error", "Please fill all required fields.");
       return;
     }
-    console.log("Form Data:", {
-      category,
-      productName,
-      description,
-      price,
-      preparationTime,
-      isExtraPortionAvailable,
-      image,
-    });
 
     const formData = new FormData();
 
     formData.append("name", productName);
-    // formData.append("photo", description);
     formData.append("category_id", category_id);
     formData.append("description", description);
     formData.append("price", price);
     formData.append("preparation_time", preparationTime);
     formData.append("has_extra_portion", isExtraPortionAvailable ? 1 : 0);
 
-    if (image) {
-      const uri = image;
-      const type = "image/jpeg"; // Adjust the type based on the file type
-      const name = "photo.jpg"; // Adjust the name as needed
-      formData.append("images[]", { uri, type, name });
-    }
+    // Add sections data
+    sections.forEach((section, index) => {
+      formData.append(`sections[${index}][name]`, section.sectionName);
+      formData.append(
+        `sections[${index}][required]`,
+        section.isRequired ? 1 : 0
+      );
 
+      // Add options for each section
+      section.options.forEach((option, optionIndex) => {
+        formData.append(
+          `sections[${index}][options][${optionIndex}][name]`,
+          option.name
+        );
+        formData.append(
+          `sections[${index}][options][${optionIndex}][price]`,
+          option.price
+        );
+      });
+    });
+
+    // Handle image upload
     if (image) {
       const uri = image;
-      const type = "image/jpeg"; // Adjust the type based on the file type
-      const name = "photo.jpg"; // Adjust the name as needed
+      const type = "image/jpeg";
+      const name = "photo.jpg";
       formData.append("images[]", { uri, type, name });
     }
 
     Orders_Mutation.mutate(formData);
   };
-
-  console.log({
-    aaa: user_data?.data?.token,
-  });
 
   const Orders_Mutation = useMutation(
     (data_info) => {
@@ -161,9 +193,6 @@ export default function AddFoodItem() {
     },
     {
       onSuccess: (success) => {
-        console.log({
-          success,
-        });
         Toast.show({
           type: "success",
           text1: "User Profile Updated successfully!",
@@ -176,9 +205,6 @@ export default function AddFoodItem() {
       },
 
       onError: (error) => {
-        console.log({
-          lll: error?.response?.data,
-        });
         Toast.show({
           type: "error",
           text1: `${error?.response?.data?.message}`,
@@ -537,9 +563,6 @@ export default function AddFoodItem() {
                             fontSize: 16,
                           }}
                         >
-                          {console.log({
-                            mb: item,
-                          })}
                           {item?.name}
                         </Text>
                       </Pressable>
