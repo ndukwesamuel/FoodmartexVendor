@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -8,24 +8,65 @@ import {
   StyleSheet,
 } from "react-native";
 import { ReusableBackButton } from "../../components/shared/SharedButton_Icon";
+import { Get_All_Menu_Fun } from "../../Redux/MenuSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { useApiRequest } from "../../hooks/Mutate";
+import Toast from "react-native-toast-message";
+import { useNavigation } from "@react-navigation/native";
+const API_BASEURL = "https://foodmart-backend.gigtech.site/api/"; // process.env.EXPO_PUBLIC_API_URL;
 
 export default function NewCategory() {
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
+  const { menu_data, menu_isLoading, menu_isError, menu_message } = useSelector(
+    (state) => state.MenuSlice
+  );
+
+  const [text, setText] = useState("");
   const [selectedItems, setSelectedItems] = useState([]);
 
-  const foodItems = [
-    { id: "1", name: "Spaghetti", price: 5000 },
-    { id: "2", name: "Jollof Rice", price: 3500 },
-    { id: "3", name: "Special Rice", price: 4000 },
-    { id: "4", name: "Jollof Rice", price: 3500 },
-    { id: "5", name: "Spaghetti", price: 5000 },
-  ];
+  const { user_data, user_profile_data } = useSelector((state) => state.Auth);
+
+  const { mutate: postCreateCategory, isLoading: isLoadingPostCreateCategory } =
+    useApiRequest({
+      url: `${API_BASEURL}v1/vendor/categories`,
+      method: "POST",
+      token: user_data?.data?.token || "",
+      onSuccess: (response) => {
+        Toast.show({
+          type: "success",
+          text1: `${response?.data?.message}`,
+        });
+        navigation.goBack();
+        // console.log("Category created successfully:", response.data);
+      },
+
+      onError: (error) => {
+        Toast.show({
+          type: "error",
+          text1: `${error?.response?.data?.message}`,
+        });
+        console.error("Category creation failed:", error?.response?.data);
+      },
+    });
+
+  // const handleSelectItem = (id) => {
+  //   setSelectedItems(
+  //     (prevSelected) =>
+  //       prevSelected.includes(id)
+  //         ? prevSelected.filter((item) => item !== id) // Remove if already selected
+  //         : [...prevSelected, id] // Add if not already selected
+  //   );
+  // };
 
   const handleSelectItem = (id) => {
-    if (selectedItems.includes(id)) {
-      setSelectedItems(selectedItems.filter((item) => item !== id));
-    } else {
-      setSelectedItems([...selectedItems, id]);
-    }
+    setSelectedItems((prevSelected) => {
+      const updatedSelected = prevSelected.includes(id)
+        ? prevSelected.filter((item) => item !== id) // Remove if already selected
+        : [...prevSelected, id]; // Add if not already selected
+      console.log("Updated Selected Items:", updatedSelected);
+      return updatedSelected;
+    });
   };
 
   const renderFoodItem = ({ item }) => (
@@ -45,11 +86,29 @@ export default function NewCategory() {
     </View>
   );
 
+  useEffect(() => {
+    dispatch(Get_All_Menu_Fun());
+  }, [dispatch]);
+
+  const handleSubmit = () => {
+    console.log("Submitting category:", {
+      category_name: text,
+      food_items: selectedItems,
+    });
+
+    postCreateCategory({
+      name: text,
+      description: "",
+      menu_item_ids: selectedItems,
+      // food_items: selectedItems,
+    });
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <View>
-          <Text style={styles.title}>New Category</Text>
+          <Text style={styles.title}>New Category </Text>
           <ReusableBackButton style={{ position: "absolute", left: 10 }} />
         </View>
       </View>
@@ -57,16 +116,27 @@ export default function NewCategory() {
         placeholder="Category Name"
         style={styles.input}
         placeholderTextColor="#000000"
+        value={text}
+        onChangeText={setText}
       />
       <Text style={styles.subHeader}>Select Food items for this category</Text>
       <FlatList
-        data={foodItems}
+        data={menu_data}
         keyExtractor={(item) => item.id}
         renderItem={renderFoodItem}
         contentContainerStyle={styles.listContainer}
       />
-      <TouchableOpacity style={styles.uploadButton}>
-        <Text style={styles.uploadText}>Upload</Text>
+      <TouchableOpacity
+        style={styles.uploadButton}
+        onPress={handleSubmit}
+        disabled={
+          isLoadingPostCreateCategory || !text
+          // || selectedItems.length === 0
+        }
+      >
+        <Text style={styles.uploadText}>
+          {isLoadingPostCreateCategory ? "Uploading..." : "Upload"}
+        </Text>
       </TouchableOpacity>
     </View>
   );
@@ -81,9 +151,6 @@ const styles = StyleSheet.create({
   header: {
     justifyContent: "center",
     marginVertical: 16,
-  },
-  backButton: {
-    marginBottom: 16,
   },
   title: {
     fontSize: 24,

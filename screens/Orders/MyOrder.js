@@ -22,6 +22,7 @@ export default function MyOrder() {
         <View
           style={{
             paddingHorizontal: 30,
+            paddingHorizontal: 30,
             marginVertical: 20,
           }}
         >

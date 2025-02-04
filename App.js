@@ -28,6 +28,14 @@ import OtpScreen from "./screens/OtpScreen";
 import UserNavigation from "./Navigation/UserNavigation";
 import Security from "./components/Auth/Security";
 import { UserProfile_Fun, reset_login } from "./Redux/AuthSlice";
+import {
+  BankDetails,
+  DeliveryAndPackaging,
+  FoodSafetyCertification,
+  OpeningHours,
+  StepTwoSignUp,
+  UploadCACDocument,
+} from "./components/Auth/VendorSignup";
 
 const queryClient = new QueryClient();
 
@@ -99,63 +107,74 @@ export const NavigationScreen = () => {
   // const isAuth = useSelector((state) => state);
   const dispatch = useDispatch();
 
-  // const user = useSelector((state) => state.Auth);
-  // const { user_data } = useSelector((state) => state.Auth);
+  const user = useSelector((state) => state.Auth);
+  const { user_data } = useSelector((state) => state.Auth);
 
   // const [country, setCountry] = useState("Loading...");
-
-  // console.log({
-  //   kkkk: user_data?.data?.token,
-  // });
 
   // dispatch(reset_login());
   return (
     <NavigationContainer>
-      {/* <StartScreen /> */}
-      {/* {user_data?.data?.token && <MainScreen />}
-      {!user_data?.data?.token && <StartScreen />}  */}
-      <UserNavigation />
+      {user_data?.data?.token && <MainScreen />}
+      {!user_data?.data?.token && <StartScreen />}
+
       <Toast />
     </NavigationContainer>
   );
 };
 
+const VerifyEmailOrMobile = () => (
+  <View>
+    <Text>Please verify your email or mobile number.</Text>
+  </View>
+);
+
 const MainScreen = () => {
-  const { user_data, user_isLoading, user_profile_data } = useSelector(
+  const { user_profile_data, user_isLoading, user_data } = useSelector(
     (state) => state?.Auth
   );
-
   const dispatch = useDispatch();
-
-  console.log({
-    kk: user_profile_data?.data?.has_default_address,
-  });
 
   useEffect(() => {
     dispatch(UserProfile_Fun());
+  }, [dispatch]);
 
-    return () => {};
-  }, []);
-
-  const isRegistered =
-    user_profile_data?.data?.has_filled_security_question !== false;
-  //  &&
-  // user_profile_data?.data?.has_default_address !== false;
-
-  console.log({
-    ddd: isRegistered,
-  });
-
-  if (isRegistered) {
-    return <UserNavigation />;
-  } else {
+  if (user_isLoading) {
     return (
-      <>
-        {!user_profile_data?.data?.has_filled_security_question && <Security />}
-        {/* {!user_profile_data?.data?.has_default_address && <Security />} */}
-      </>
+      <View>
+        <Text>Loading...</Text>
+      </View>
     );
   }
+
+  console.log({
+    jajaj: user_profile_data?.data,
+  });
+  const onboarding = user_profile_data?.meta[0]?.onboarding;
+  // console.log({
+  //   ghgh: onboarding,
+  // });
+  // Mapping keys to their corresponding components
+  const onboardingComponents = {
+    has_verified_email_or_mobile_number: <OtpScreen />,
+    has_filled_bank_details: <BankDetails />,
+    has_filled_food_satefy_certification: <FoodSafetyCertification />,
+    has_uploaded_cac_document: <UploadCACDocument />,
+    has_filled_opening_hours: <OpeningHours />,
+    has_filled_delivery_and_packaging: <DeliveryAndPackaging />,
+  };
+
+  // Find the first unmet onboarding step
+  const unmetStep = Object.keys(onboardingComponents).find(
+    (key) => onboarding && !onboarding[key]
+  );
+
+  if (unmetStep) {
+    return onboardingComponents[unmetStep];
+  }
+
+  // If all steps are complete, show the main navigation
+  return <UserNavigation />;
 };
 
 const BeforeLOginScreen = () => {

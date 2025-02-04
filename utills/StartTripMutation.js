@@ -3,7 +3,7 @@ import axios from "axios";
 import { useMutation } from "react-query";
 import Toast from "react-native-toast-message";
 import { useNavigation } from "@react-navigation/native";
-const API_BASEURL = process.env.EXPO_PUBLIC_API_URL;
+const API_BASEURL = "https://foodmart-backend.gigtech.site/api/"; // process.env.EXPO_PUBLIC_API_URL;
 
 export const StartTripMutation = (token, item) => {
   const navigation = useNavigation();

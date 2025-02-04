@@ -15,14 +15,32 @@ import { Forminput, Forminputpassword } from "../shared/InputForm";
 import { useDispatch, useSelector } from "react-redux";
 import { Login_Fun } from "../../Redux/AuthSlice";
 import { maincolors } from "../../utills/Themes";
+import { setOtpEmail } from "../../Redux/OnboardingSlice";
 
-const SignIn = ({ navigation, onSetAuth }) => {
-  const user_dat = useSelector((state) => state.Auth);
+const SignIn = ({ navigation, setAuthType }) => {
+  const { user_isLoading } = useSelector((state) => state.Auth);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
   const dispatch = useDispatch();
+
+  console.log({
+    email,
+    password,
+    user_isLoading,
+  });
+
+  const handleLogin = () => {
+    dispatch(
+      Login_Fun({
+        email: email, //"vendor@gmail.com",
+        password: password, // "password",
+        device_name: "mobile",
+      })
+    );
+  };
+
   return (
     <AppscreenLogo>
       <View
@@ -76,10 +94,6 @@ const SignIn = ({ navigation, onSetAuth }) => {
 
               // borderColor: "#ccc",
             }}
-            // onChangeText={(text) =>
-            //   handlePasswordChange("confirmPassword", text)
-            // }
-            // value={passwords.confirmPassword}
           />
         </View>
 
@@ -90,19 +104,23 @@ const SignIn = ({ navigation, onSetAuth }) => {
           <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
         </TouchableOpacity>
 
-        {user_dat?.user_isLoading ? (
+        {user_isLoading ? (
           <ActivityIndicator size="small" color={maincolors.primary} />
         ) : (
           <TouchableOpacity
             style={styles.signInButton}
-            onPress={() =>
+            onPress={() => {
+              let newmail = email.toLowerCase();
+
+              dispatch(setOtpEmail(newmail));
+
               dispatch(
                 Login_Fun({
-                  email,
+                  email: newmail,
                   password,
                 })
-              )
-            }
+              );
+            }}
           >
             <Text style={styles.signInButtonText}>Sign In</Text>
           </TouchableOpacity>
@@ -112,7 +130,7 @@ const SignIn = ({ navigation, onSetAuth }) => {
           style={styles.signUpContainer}
           // onPress={() => navigation.navigate("Signup")}
 
-          onPress={() => onSetAuth("sign-up")}
+          onPress={() => setAuthType("signup")}
         >
           <Text style={styles.signUpText}>
             Don’t have an Account?{" "}

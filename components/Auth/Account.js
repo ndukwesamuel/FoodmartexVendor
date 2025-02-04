@@ -5,13 +5,48 @@ import {
   TouchableOpacity,
   StyleSheet,
   ScrollView,
+  Alert,
 } from "react-native";
 import { Feather, FontAwesome5 } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { maincolors } from "../../utills/Themes";
+import { useDispatch } from "react-redux";
+import { reset_login } from "../../Redux/AuthSlice";
 
 const Account = ({ onCLose }) => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    // Example: Clear session data (e.g., AsyncStorage or SecureStore)
+    Alert.alert(
+      "Log Out",
+      "Are you sure you want to log out?",
+      [
+        { text: "Cancel", style: "cancel" },
+        {
+          text: "Log Out",
+          style: "destructive",
+          onPress: async () => {
+            dispatch(reset_login());
+            // try {
+            //   // Example: Clear user data
+            //   // await AsyncStorage.clear();
+            //   console.log("User logged out");
+            //   navigation.reset({
+            //     index: 0,
+            //     routes: [{ name: "LoginScreen" }], // Redirect to Login or Welcome screen
+            //   });
+            // } catch (error) {
+            //   console.error("Error during logout: ", error);
+            // }
+          },
+        },
+      ],
+      { cancelable: true }
+    );
+  };
+
   const menuItems = [
     {
       title: "Business Information",
@@ -23,9 +58,8 @@ const Account = ({ onCLose }) => {
       icon: <Feather name="shopping-bag" size={24} color="#FFA500" />,
       screen: "DeliveredOrders",
     },
-
     {
-      title: "Favorites",
+      title: "Menu",
       icon: <Feather name="heart" size={24} color={maincolors.primary} />,
       screen: "MyFavorite",
     },
@@ -57,7 +91,7 @@ const Account = ({ onCLose }) => {
     {
       title: "Log Out",
       icon: <Feather name="log-out" size={24} color="#FFA500" />,
-      screen: "LogoutScreen",
+      action: handleLogout, // Attach logout handler
     },
   ];
 
@@ -76,7 +110,11 @@ const Account = ({ onCLose }) => {
         {menuItems.map((item, index) => (
           <TouchableOpacity
             key={index}
-            onPress={() => navigation.navigate(item.screen)}
+            onPress={() =>
+              item.action
+                ? item.action() // Call action for logout
+                : navigation.navigate(item.screen)
+            }
           >
             {/* Separator */}
             {index === 4 && <View style={styles.separator} />}

@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { maincolors } from "../../utills/Themes";
 
-const AuthOnboarding = ({ setStart }) => {
+const AuthOnboarding = ({ setAuthType }) => {
   return (
     <ImageBackground
       source={require("../../assets/Foodmart/Rectangle13.png")}
@@ -26,8 +26,8 @@ const AuthOnboarding = ({ setStart }) => {
             <TouchableOpacity
               style={styles.button}
               onPress={() => {
-                setStart(true); // Toggle start state to true
-                // navigation.navigate("Login");
+                setAuthType("signup"); // Toggle start state to true
+                // navigation.navigate("Signup");
               }}
             >
               <Text style={styles.buttonText}>Sign Up</Text>
@@ -36,7 +36,7 @@ const AuthOnboarding = ({ setStart }) => {
             <TouchableOpacity
               style={[styles.button, styles.signupButton]}
               onPress={() => {
-                setStart(true); // Toggle start state to true
+                setAuthType("signin"); // Toggle start state to true
                 // navigation.navigate("Signup");
               }}
             >

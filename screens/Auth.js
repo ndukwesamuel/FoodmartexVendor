@@ -1,16 +1,35 @@
 import { View, StatusBar, SafeAreaView } from "react-native";
 import React, { useState } from "react";
-import AuthContainer from "../components/Auth/AuthContainer";
-import AuthOnboarding from "../components/Auth/AuthOnboarding";
-import ProfilePictureScreen from "../components/Auth/CreateOrSkipScreen";
+import AuthOnboarding from "../components/Auth/AuthOnboarding"; // Onboarding component
+import SignIn from "../components/Auth/SignIn";
+import SignUp from "../components/Auth/SignUp";
+import OtpScreen from "./OtpScreen";
 
 const Auth = () => {
-  const [start, setStart] = useState(false);
+  const [authType, setAuthType] = useState("main"); // Defaults to "main"
+
+  console.log({
+    lll: authType,
+  });
+  const renderAuthScreen = () => {
+    switch (authType) {
+      case "main":
+        return <AuthOnboarding setAuthType={setAuthType} />;
+      case "signup":
+        return <SignUp setAuthType={setAuthType} />;
+      case "signin":
+        return <SignIn setAuthType={setAuthType} />;
+      case "otp":
+        return <OtpScreen setAuthType={setAuthType} />;
+      default:
+        return <AuthOnboarding setAuthType={setAuthType} />;
+    }
+  };
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <StatusBar backgroundColor="#001272" barStyle="light-content" />
-      {start ? <AuthContainer /> : <AuthOnboarding setStart={setStart} />}
+      {renderAuthScreen()}
     </SafeAreaView>
   );
 };

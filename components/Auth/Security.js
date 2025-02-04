@@ -18,7 +18,7 @@ import { Forminput } from "../shared/InputForm";
 import { maincolors } from "../../utills/Themes";
 import AppscreenLogo from "../shared/AppscreenLogo";
 
-const API_BASEURL = process.env.EXPO_PUBLIC_API_URL;
+const API_BASEURL = "https://foodmart-backend.gigtech.site/api/"; // process.env.EXPO_PUBLIC_API_URL;
 console.log({
   ggg: API_BASEURL,
 });

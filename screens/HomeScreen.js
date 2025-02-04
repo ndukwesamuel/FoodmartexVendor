@@ -18,9 +18,17 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import Account from "../components/Auth/Account";
 import CartScreen from "../components/CartScreen";
+import { useSelector } from "react-redux";
 const HomeScreen = () => {
   const navigation = useNavigation();
+  const { user_data, user_isLoading, user_profile_data } = useSelector(
+    (state) => state?.Auth
+  );
 
+  console.log({
+    mxmxOne: user_profile_data?.data,
+    // mxmxOne: user_profile_data,
+  });
   const [showaccount, setShowaccount] = useState(false);
 
   const [notification, setnotification] = useState("home");
@@ -49,7 +57,9 @@ const HomeScreen = () => {
           <TouchableOpacity onPress={() => setnotification("account")}>
             <Image
               source={{
-                uri: "https://s3-alpha-sig.figma.com/img/9265/f6e3/e22a4d011fdf9bee1bc447fd54300962?Expires=1733702400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=DJstDRZyzM8SPgw~rxOWWk6UQQXvtjM73QA9SnQ34mdW-0RlWzwMhJJRdVdo0NI5YZXSp7Xe~jQxKExk7rLFTFhQev4IBH55Ok0vbC8ABCk7Kl9g-4axNOKc5p~qUUK9mvoODmjb8fTIP2jPPIUT4vLauhnrYkf6JzvPvapnZpxXdqBGZIoZOPpwtuph4ARUkYckYWGuNPBpAUQfvLSVNgkQNsaJc95ZKfnOwo4fic~un8FxAuNU76on51nhXSoI1fX2of-naJYGUovOpcBMZwMuQKr2sdipSMOTJcMmsmZihOT6vVmxd23epbBeLZ~tBedyUmphCKxfFHoLs7AOzA__",
+                uri:
+                  user_profile_data?.data?.restaurant_picture ||
+                  "https://s3-alpha-sig.figma.com/img/9265/f6e3/e22a4d011fdf9bee1bc447fd54300962?Expires=1733702400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=DJstDRZyzM8SPgw~rxOWWk6UQQXvtjM73QA9SnQ34mdW-0RlWzwMhJJRdVdo0NI5YZXSp7Xe~jQxKExk7rLFTFhQev4IBH55Ok0vbC8ABCk7Kl9g-4axNOKc5p~qUUK9mvoODmjb8fTIP2jPPIUT4vLauhnrYkf6JzvPvapnZpxXdqBGZIoZOPpwtuph4ARUkYckYWGuNPBpAUQfvLSVNgkQNsaJc95ZKfnOwo4fic~un8FxAuNU76on51nhXSoI1fX2of-naJYGUovOpcBMZwMuQKr2sdipSMOTJcMmsmZihOT6vVmxd23epbBeLZ~tBedyUmphCKxfFHoLs7AOzA__",
               }} // Replace with profile picture URL
               style={styles.profileImage}
             />
@@ -77,11 +87,11 @@ const HomeScreen = () => {
                 color="black"
               />
             </TouchableOpacity>
-            <TouchableOpacity
+            {/* <TouchableOpacity
               onPress={() => navigation.navigate("Notification")}
             >
               <Ionicons name="notifications-outline" size={24} color="black" />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
         </View>
         {notification === "home" && (
@@ -95,14 +105,14 @@ const HomeScreen = () => {
 
             {/* Greeting Section */}
             <View>
-              <Text style={styles.greetingText}>Hello User,</Text>
+              <Text style={styles.greetingText}>
+                Hello {user_profile_data?.data?.name},
+              </Text>
             </View>
 
             <View style={styles.promoContainer}>
               <Image
-                source={{
-                  uri: "https://s3-alpha-sig.figma.com/img/6bca/0ae8/128354487efa51482957684e0d56f89f?Expires=1733702400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=UnJCAW4DT9aq9S1dtNeqmXk2dJucOVo5bxaWqN0E2WEXjsTQD3Jr6MniBAE7fDrdA73sy4oCw007r7aQWJeIGiDYsIHPEXJ5XJi~LdRA-o04HZR-WnnrrmJX-DaUmDv~LnTMsUWDlFtWYTcQ9JHSS~U0lq34ynMXVeQ9~UyqSC0T~yq-V-r-O83G7RGeObfc8ds7DkS7I6x~aBuNVm5E34-ehaBCSgenujDQN8zNMyAunBZoHU1mWWmvE4sGLB93EjoMbt3xwofJO2sJM8G2e0P0sMgpsFpfjBZNL~HjAaht~NtO-o7ZxKm9wT5LEOZVmWPjgZu5fkqruCX~lcsf-Q__",
-                }}
+                source={require("../assets/Foodmart/bell.png")}
                 style={{
                   width: 56,
                   height: 56,
@@ -127,7 +137,7 @@ const HomeScreen = () => {
               }}
             >
               <TouchableOpacity
-              onPress={() => navigation.navigate("Menu")}
+                onPress={() => navigation.navigate("Menu")}
                 style={{
                   backgroundColor: "#EAFFF0",
                   // paddingVertical: 20,
@@ -145,9 +155,7 @@ const HomeScreen = () => {
                 }}
               >
                 <Image
-                  source={{
-                    uri: "https://s3-alpha-sig.figma.com/img/3005/73e8/9b4dfc9c71ce79042ae61d3f3f1284ed?Expires=1733702400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=jXTW92thGBXj5EbIktXYrCm~n5eYsriebhawNjkg1Mo3f22eclhoylz5lItcwZC1B5RM9qiIJKAcT3FGRkgpoVgcoBoDnAnzk36Fa~ZpuWl47ujbS2O-BcM5vpY5EUPSLGGtCVhGdx354Sb6Q6oa6ZZBRIBnnxGitA2WsEWMiRmg9YmJfK4zV3~HwJO3WpILKVoGVAzMSLL6kwCLHfk2Vqspm20SpG9jaSaXutAU6yf~PL77KselZiAwQ8lnIP2El4SJPQiRoeCUntkg9PdHZbkmXJmHlOrV634x5JGrvAjz-XgEERmirhmjJpkZBm6kjiz~8nYFP0kNfHyFk0s-SQ__",
-                  }} // Replace with discount image URL
+                  source={require("../assets/Foodmart/book.png")}
                   style={styles.optionIcon}
                 />
                 <Text style={styles.optionText}>Menu</Text>
@@ -156,22 +164,16 @@ const HomeScreen = () => {
               <TouchableOpacity
                 style={{
                   backgroundColor: "#EAF0FF",
-                  // paddingVertical: 20,
                   borderRadius: 10,
                   marginBottom: 10,
                   paddingVertical: 30,
 
-                  // borderWidth: 1,
-
-                  // padding: 30,
-                  // paddingHorizontal: 50,
                   width: "45%",
                 }}
+                onPress={() => navigation.navigate("AllOrders")}
               >
                 <Image
-                  source={{
-                    uri: "https://s3-alpha-sig.figma.com/img/3005/73e8/9b4dfc9c71ce79042ae61d3f3f1284ed?Expires=1733702400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=jXTW92thGBXj5EbIktXYrCm~n5eYsriebhawNjkg1Mo3f22eclhoylz5lItcwZC1B5RM9qiIJKAcT3FGRkgpoVgcoBoDnAnzk36Fa~ZpuWl47ujbS2O-BcM5vpY5EUPSLGGtCVhGdx354Sb6Q6oa6ZZBRIBnnxGitA2WsEWMiRmg9YmJfK4zV3~HwJO3WpILKVoGVAzMSLL6kwCLHfk2Vqspm20SpG9jaSaXutAU6yf~PL77KselZiAwQ8lnIP2El4SJPQiRoeCUntkg9PdHZbkmXJmHlOrV634x5JGrvAjz-XgEERmirhmjJpkZBm6kjiz~8nYFP0kNfHyFk0s-SQ__",
-                  }} // Replace with discount image URL
+                  source={require("../assets/Foodmart/biro.png")}
                   style={styles.optionIcon}
                 />
                 <Text style={styles.optionText}>Orders</Text>
@@ -203,6 +205,7 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: 20,
     marginRight: 8,
+    borderWidth: 1,
   },
   searchInput: {
     flex: 1,

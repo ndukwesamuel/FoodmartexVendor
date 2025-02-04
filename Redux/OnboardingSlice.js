@@ -6,6 +6,7 @@ const initialState = {
   userlogin: "LOGIN",
   otp: false,
   otpemail: "",
+  Otptoken: null,
 };
 
 export const OnboardingSlice = createSlice({
@@ -15,6 +16,10 @@ export const OnboardingSlice = createSlice({
     reset_isOnboarding: (state) => initialState,
     reset_otpemail: (state) => {
       state.otpemail = "";
+    },
+
+    reset_Otptoken: (state) => {
+      state.Otptoken = "";
     },
 
     reser_otp: (state) => {
@@ -52,6 +57,10 @@ export const OnboardingSlice = createSlice({
       state.otpemail = action.payload;
     },
 
+    setOtptoken: (state, action) => {
+      state.Otptoken = action.payload;
+    },
+
     authScreenChange: (state, action) => {
       state.userlogin = action.payload; // or action.type, depending on what you need
       console.log("this is userlogin", state.userlogin);
@@ -72,6 +81,8 @@ export const {
   setOtpEmail,
   reset_otpemail,
   reser_otp,
+  setOtptoken,
+  reset_Otptoken,
 } = OnboardingSlice.actions;
 export const onBoaringAction = OnboardingSlice.actions;
 export default OnboardingSlice.reducer;
