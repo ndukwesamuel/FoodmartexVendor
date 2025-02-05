@@ -35,6 +35,8 @@ export default function Menu() {
     return () => {};
   }, []);
 
+  // console.log({allcate: categories_data})
+
   const handleSelect = (option) => {
     setSelectedOption(option);
     setDropdownVisible(false);

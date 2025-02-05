@@ -157,11 +157,11 @@ const MainScreen = () => {
   // Mapping keys to their corresponding components
   const onboardingComponents = {
     has_verified_email_or_mobile_number: <OtpScreen />,
-    has_filled_bank_details: <BankDetails />,
-    has_filled_food_satefy_certification: <FoodSafetyCertification />,
-    has_uploaded_cac_document: <UploadCACDocument />,
-    has_filled_opening_hours: <OpeningHours />,
-    has_filled_delivery_and_packaging: <DeliveryAndPackaging />,
+    // has_filled_bank_details: <BankDetails />,
+    // has_filled_food_satefy_certification: <FoodSafetyCertification />,
+    // has_uploaded_cac_document: <UploadCACDocument />,
+    // has_filled_opening_hours: <OpeningHours />,
+    // has_filled_delivery_and_packaging: <DeliveryAndPackaging />,
   };
 
   // Find the first unmet onboarding step

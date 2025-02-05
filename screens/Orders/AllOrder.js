@@ -28,6 +28,8 @@ export default function AllOrder() {
     return () => {};
   }, []);
 
+  console.log({vendorOrder: vendor_order_data[0].order_items})
+
   const navigation = useNavigation();
   const orders = [
     {
@@ -99,7 +101,7 @@ export default function AllOrder() {
           marginVertical: 8,
         }}
       />
-      {item.items.map((product, index) => (
+      {item?.items?.map((product, index) => (
         <View
           key={index}
           style={{
