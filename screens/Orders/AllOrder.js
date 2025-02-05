@@ -28,7 +28,7 @@ export default function AllOrder() {
     return () => {};
   }, []);
 
-  console.log({vendorOrder: vendor_order_data[0].order_items})
+  console.log({ vendorOrder: vendor_order_data[0].order_items[0].menu_item });
 
   const navigation = useNavigation();
   const orders = [
@@ -101,7 +101,7 @@ export default function AllOrder() {
           marginVertical: 8,
         }}
       />
-      {item?.items?.map((product, index) => (
+      {item?.order_items?.map((product, index) => (
         <View
           key={index}
           style={{
@@ -121,9 +121,9 @@ export default function AllOrder() {
           </Text>
           <View style={{ flex: 1 }}>
             <Text style={{ fontSize: 16, fontWeight: "bold" }}>
-              {product.name}
+              {product.menu_item.name}
             </Text>
-            {product.options.map((option, i) => (
+            {/* {product.options.map((option, i) => (
               <Text
                 key={i}
                 style={{
@@ -133,7 +133,7 @@ export default function AllOrder() {
               >
                 x1 {option}
               </Text>
-            ))}
+            ))} */}
           </View>
           <Text
             style={{
@@ -205,15 +205,12 @@ export default function AllOrder() {
         <ReusableTitle data="All Orders" />
         <View
           style={{
-            // paddingHorizontal: 30,
-            // paddingHorizontal: 30,
-            // paddingHorizontal: 30,
             marginVertical: 20,
           }}
         >
-          {console.log({
+          {/* {console.log({
             kjkd: vendor_order_data?.length,
-          })}
+          })} */}
           {vendor_order_data?.length > 0 ? (
             <FlatList
               data={vendor_order_data}
@@ -230,7 +227,7 @@ export default function AllOrder() {
             </Text>
           )}
 
-          <FlatList
+          {/* <FlatList
             data={orders}
             renderItem={renderOrder}
             keyExtractor={(item) => item.id}
@@ -238,7 +235,7 @@ export default function AllOrder() {
               paddingHorizontal: 16,
               paddingVertical: 8,
             }}
-          />
+          /> */}
         </View>
       </View>
     </AppScreen>
