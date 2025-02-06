@@ -21,7 +21,7 @@ import { Get_All_Vendor_Order_Fun } from "../../Redux/OrderSlice";
 import { useMutation } from "react-query";
 import Toast from "react-native-toast-message";
 import axios from "axios";
-const API_BASEURL = process.env.EXPO_PUBLIC_API_URL;
+const API_BASEURL = "https://foodmart-backend.gigtech.site/api/"
 
 export default function AllOrder() {
   const dispatch = useDispatch();
@@ -38,8 +38,9 @@ export default function AllOrder() {
   console.log({ vendorOrder: vendor_order_data[0].id });
 
   const AcceptAnOrder_Mutation = useMutation(
-    ({ id, data_info }) => {
+    ( id, data_info ) => {
       const url = `${API_BASEURL}v1/vendor/orders/:${id}/status`;
+      console.log({url: url})
       const config = {
         headers: {
           "Content-Type": "application/json",
