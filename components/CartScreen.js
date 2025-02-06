@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -9,6 +9,12 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { ReusableBackButton } from "./shared/SharedButton_Icon";
+import { ReusableTitle } from "./shared/Reuseablecomponent";
+import { useDispatch, useSelector } from "react-redux";
+import { Get_All_Vendor_Order_Fun } from "../Redux/OrderSlice";
+// import { ReusableBackButton } from "../../components/shared/SharedButton_Icon";
+// import { ReusableTitle } from "../../components/shared/Reuseablecomponent";
 
 const orders = Array(10).fill({
   id: "#E8F99P",
@@ -18,18 +24,28 @@ const orders = Array(10).fill({
 });
 
 const CartScreen = () => {
+  const dispatch = useDispatch();
   const navigation = useNavigation();
   const [activeTab, setActiveTab] = useState("Pending");
+  const { vendor_order_data } = useSelector((state) => state.OrderSlice);
   const tabs = ["Pending", "Preparing", "Delivered"];
+
+  useEffect(() => {
+    dispatch(Get_All_Vendor_Order_Fun());
+    return () => {};
+  }, [dispatch]);
+
+  const filteredOrders = vendor_order_data.filter(
+    (order) => order.status === activeTab.toLowerCase()
+  );
+  console.log({ filteredOrders: filteredOrders });
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Ionicons name="arrow-back" size={24} color="black" />
-        </TouchableOpacity>
-        <Text style={styles.title}>Order History</Text>
-      </View>
+      <ReusableBackButton
+        style={{ position: "absolute", top: 15, zIndex: 1, left: 20 }}
+      />
+      <ReusableTitle data="All Orders" />
       <View style={styles.searchContainer}>
         <Ionicons
           name="filter"
@@ -56,24 +72,29 @@ const CartScreen = () => {
       </View>
       <View style={styles.tableHeader}>
         <Text style={styles.headerText}>Order ID</Text>
-        <Text style={styles.headerText}>Delivery Code</Text>
+        <Text style={styles.headerText}>Tracking Number</Text>
         <Text style={styles.headerText}>Order Date & Time</Text>
       </View>
       <FlatList
-        data={orders}
+        data={filteredOrders}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => (
           <TouchableOpacity
             style={styles.row}
-            onPress={() => navigation.navigate("MyOrder")}
+            onPress={() => navigation.navigate("MyOrder", item?.id)}
           >
             <Text style={styles.cell}>{item.id}</Text>
-            <Text style={styles.cell}>{item.deliveryCode}</Text>
+            <Text style={styles.cell}>{item.tracking_number}</Text>
             <Text style={styles.cell}>
               {item.date} | {item.time}
             </Text>
           </TouchableOpacity>
         )}
+        ListEmptyComponent={
+          <Text style={{ textAlign: "center", marginTop: 30 }}>
+            No Orders in this category
+          </Text>
+        }
       />
     </View>
   );
@@ -83,16 +104,18 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    padding: 20,
+    paddingVertical: 20,
   },
   header: {
     flexDirection: "row",
     alignItems: "center",
+    padding: "",
   },
   title: {
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: "bold",
     marginLeft: 10,
+    color: "#000000",
   },
   searchContainer: {
     flexDirection: "row",
@@ -102,6 +125,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginTop: 15,
     paddingHorizontal: 10,
+    marginHorizontal: 20,
   },
   filterIcon: {
     marginRight: 5,
@@ -115,6 +139,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     borderBottomWidth: 1,
     borderBottomColor: "#ccc",
+    justifyContent: "space-between",
   },
   tab: {
     paddingVertical: 10,
@@ -124,19 +149,21 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 15,
     borderBottomWidth: 2,
-    borderBottomColor: "green",
+    borderBottomColor: "#023526",
   },
   tabText: {
-    color: "gray",
+    color: "#686868",
+    fontSize: 20,
   },
   activeTabText: {
-    color: "green",
+    color: "#023526",
     fontWeight: "bold",
+    fontSize: 20,
   },
   tableHeader: {
     flexDirection: "row",
     justifyContent: "space-between",
-    backgroundColor: "#F5EBD0",
+    backgroundColor: "#FFF1E0",
     padding: 10,
     marginTop: 10,
   },
