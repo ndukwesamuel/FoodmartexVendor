@@ -10,6 +10,7 @@ import {
   Pressable,
   SafeAreaView,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
 import { ReusableBackButton } from "../../components/shared/SharedButton_Icon";
 import { ReusableTitle } from "../../components/shared/Reuseablecomponent";
@@ -17,9 +18,15 @@ import AppScreen from "../../components/shared/AppScreen";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { Get_All_Vendor_Order_Fun } from "../../Redux/OrderSlice";
+import { useMutation } from "react-query";
+import Toast from "react-native-toast-message";
+import axios from "axios";
+const API_BASEURL = "https://foodmart-backend.gigtech.site/api/"
 
 export default function AllOrder() {
   const dispatch = useDispatch();
+  const navigation = useNavigation();
+  const { user_data } = useSelector((state) => state?.Auth);
   const { vendor_order_data } = useSelector((state) => state.OrderSlice);
 
   useEffect(() => {
@@ -28,45 +35,42 @@ export default function AllOrder() {
     return () => {};
   }, []);
 
-  const navigation = useNavigation();
-  const orders = [
-    {
-      id: "E8F99P",
-      date: "24-01-2024",
-      time: "12:30PM",
-      items: [
-        {
-          quantity: 1,
-          name: "Special Rice",
-          price: 15000,
-          options: ["Option 1", "Option 3"],
-        },
-        {
-          quantity: 3,
-          name: "Special Rice",
-          price: 25000,
-          options: ["Option 2", "Option 3"],
-        },
-      ],
-      status: "Pending",
-    },
-    {
-      id: "A3B56D",
-      date: "24-01-2024",
-      time: "01:00PM",
-      items: [
-        {
-          quantity: 2,
-          name: "Jollof Rice",
-          price: 12000,
-          options: ["Option 1"],
-        },
-        { quantity: 1, name: "Chicken", price: 5000, options: ["Option 2"] },
-      ],
-      status: "Pending",
-    },
-  ];
+  console.log({ vendorOrder: vendor_order_data[0].id });
 
+  const AcceptAnOrder_Mutation = useMutation(
+    ( id, data_info ) => {
+      const url = `${API_BASEURL}v1/vendor/orders/:${id}/status`;
+      console.log({url: url})
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${user_data?.data?.token}`,
+        },
+      };
+      return axios.post(url, data_info, config);
+    },
+    {
+      onSuccess: (success) => {
+        Toast.show({
+          type: "success",
+          text1: `${success?.data?.message}`,
+        });
+      },
+      onError: (error) => {
+        Toast.show({
+          type: "error",
+          text1: `${error?.response?.data?.message}`,
+        });
+      },
+    }
+  );
+
+  const handleAcceptAnOrder = (id, status) => {
+    const data = { status: status };
+    console.log({ id: id, status: status });
+    AcceptAnOrder_Mutation.mutate(id, data);
+  };
   const renderOrder = ({ item }) => (
     <View
       style={{
@@ -99,7 +103,7 @@ export default function AllOrder() {
           marginVertical: 8,
         }}
       />
-      {item.items.map((product, index) => (
+      {item?.order_items?.map((product, index) => (
         <View
           key={index}
           style={{
@@ -119,19 +123,8 @@ export default function AllOrder() {
           </Text>
           <View style={{ flex: 1 }}>
             <Text style={{ fontSize: 16, fontWeight: "bold" }}>
-              {product.name}
+              {product.menu_item.name}
             </Text>
-            {product.options.map((option, i) => (
-              <Text
-                key={i}
-                style={{
-                  color: "#666",
-                  fontSize: 14,
-                }}
-              >
-                x1 {option}
-              </Text>
-            ))}
           </View>
           <Text
             style={{
@@ -160,16 +153,21 @@ export default function AllOrder() {
             marginRight: 8,
             alignItems: "center",
           }}
+          onPress={() => handleAcceptAnOrder(item.id, "accepted")}
         >
-          <Text
-            style={{
-              fontSize: 16,
-              fontWeight: "bold",
-              color: "#fff",
-            }}
-          >
-            Accept
-          </Text>
+          {AcceptAnOrder_Mutation.isLoading ? (
+            <ActivityIndicator size={"small"} color={"white"} />
+          ) : (
+            <Text
+              style={{
+                fontSize: 16,
+                fontWeight: "bold",
+                color: "#fff",
+              }}
+            >
+              Accept
+            </Text>
+          )}
         </Pressable>
         <Pressable
           style={{
@@ -180,16 +178,21 @@ export default function AllOrder() {
             borderRadius: 4,
             alignItems: "center",
           }}
+          onPress={() => handleAcceptAnOrder(item.id, "declined")}
         >
-          <Text
-            style={{
-              fontSize: 16,
-              fontWeight: "bold",
-              color: "#FFA500",
-            }}
-          >
-            Reject
-          </Text>
+          {AcceptAnOrder_Mutation.isLoading ? (
+            <ActivityIndicator size={"small"} color={"yellow"}/>
+          ) : (
+            <Text
+              style={{
+                fontSize: 16,
+                fontWeight: "bold",
+                color: "#FFA500",
+              }}
+            >
+              Reject
+            </Text>
+          )}
         </Pressable>
       </View>
     </View>
@@ -203,15 +206,9 @@ export default function AllOrder() {
         <ReusableTitle data="All Orders" />
         <View
           style={{
-            // paddingHorizontal: 30,
-            // paddingHorizontal: 30,
-            // paddingHorizontal: 30,
             marginVertical: 20,
           }}
         >
-          {console.log({
-            kjkd: vendor_order_data?.length,
-          })}
           {vendor_order_data?.length > 0 ? (
             <FlatList
               data={vendor_order_data}
@@ -227,16 +224,6 @@ export default function AllOrder() {
               No orders available.
             </Text>
           )}
-
-          <FlatList
-            data={orders}
-            renderItem={renderOrder}
-            keyExtractor={(item) => item.id}
-            contentContainerStyle={{
-              paddingHorizontal: 16,
-              paddingVertical: 8,
-            }}
-          />
         </View>
       </View>
     </AppScreen>
