@@ -13,6 +13,12 @@ const initialState = {
   vendor_order_isSuccess: false,
   vendor_order_isLoading: false,
   vendor_order_message: null,
+
+  Get_an_order_data: null,
+  Get_an_order_isError: false,
+  Get_an_order_isSuccess: false,
+  Get_an_order_isLoading: false,
+  Get_an_order_message: null,
 };
 
 const fetchResponsData = async (url, thunkAPI) => {
@@ -53,6 +59,45 @@ export const Get_All_Vendor_Order_Fun = createAsyncThunk(
       console.log({ error });
       return thunkAPI.rejectWithValue(
         error.message || "An error occurred while fetching candidate profile"
+      );
+    }
+  }
+);
+
+export const Get_an_order = createAsyncThunk(
+  "OrderSlice/Get_an_order",
+  async (params, thunkAPI) => {
+    // console.log({data: body, order: orderStatus})
+    try {
+      const token = thunkAPI.getState()?.Auth?.user_data?.data?.token;
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      console.log({ url: `${API_BASEURL}v1/vendor/orders/${params}` });
+      // If you need to use GET but also send a body
+      const response = await axios.request({
+        method: "GET",
+        url: `${API_BASEURL}v1/vendor/orders/${params}`,
+        headers: config.headers,
+        data: {
+          cart_id: 1,
+          use_points: true,
+          use_wallet: true,
+          address_id: 1,
+        }, // Include body here
+      });
+      console.log({response:response.data})
+      return response.data;
+    } catch (error) {
+      // Handle error
+      console.error("Error fetching orders:", error);
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.message || "An error occurred"
       );
     }
   }
@@ -101,6 +146,23 @@ export const OrderSlice = createSlice({
         state.vendor_order_isError = action.payload;
         state.vendor_order_data = null;
         state.vendor_order_isSuccess = false;
+      })
+      .addCase(Get_an_order.pending, (state) => {
+        state.Get_an_order_isLoading = true;
+      })
+      .addCase(Get_an_order.fulfilled, (state, action) => {
+        state.Get_an_order_isLoading = false;
+        state.Get_an_order_isError = false;
+        state.Get_an_order_data = action.payload;
+        state.Get_an_order_message = null;
+        state.Get_an_order_isSuccess = true;
+      })
+      .addCase(Get_an_order.rejected, (state, action) => {
+        state.Get_an_order_isLoading = false;
+        state.Get_an_order_isError = true;
+        state.Get_an_order_message = action.payload;
+        state.Get_an_order_data = null;
+        state.Get_an_order_isSuccess = false;
       });
   },
 });

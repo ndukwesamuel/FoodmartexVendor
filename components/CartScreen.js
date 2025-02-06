@@ -27,18 +27,18 @@ const CartScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [activeTab, setActiveTab] = useState("Pending");
-  const { vendor_order_data } = useSelector((state) => state.OrderSlice);
-  const tabs = ["Pending", "Preparing", "Delivered"];
+  const { vendor_order_data } = useSelector((state) => state?.OrderSlice);
+  const tabs = ["Pending", "Accepted", "Delivered"];
 
   useEffect(() => {
     dispatch(Get_All_Vendor_Order_Fun());
     return () => {};
   }, [dispatch]);
 
-  const filteredOrders = vendor_order_data.filter(
+  const filteredOrders = vendor_order_data?.filter(
     (order) => order.status === activeTab.toLowerCase()
   );
-  console.log({ filteredOrders: filteredOrders });
+  // console.log({ filteredOrders: filteredOrders });
 
   return (
     <View style={styles.container}>
@@ -81,7 +81,7 @@ const CartScreen = () => {
         renderItem={({ item }) => (
           <TouchableOpacity
             style={styles.row}
-            onPress={() => navigation.navigate("MyOrder", item?.id)}
+            onPress={() => navigation.navigate("MyOrder", {item: item?.id})}
           >
             <Text style={styles.cell}>{item.id}</Text>
             <Text style={styles.cell}>{item.tracking_number}</Text>

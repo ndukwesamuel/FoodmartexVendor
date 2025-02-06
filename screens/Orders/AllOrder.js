@@ -27,7 +27,7 @@ export default function AllOrder() {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const { user_data } = useSelector((state) => state?.Auth);
-  const { vendor_order_data } = useSelector((state) => state.OrderSlice);
+  const { vendor_order_data } = useSelector((state) => state?.OrderSlice);
 
   useEffect(() => {
     dispatch(Get_All_Vendor_Order_Fun());
