@@ -80,7 +80,7 @@ const HomeScreen = () => {
             <TextInput placeholder="search" style={styles.searchInput} />
           </View>
           <View style={styles.iconContainer}>
-            <TouchableOpacity onPress={cart_state}>
+            <TouchableOpacity onPress={() => navigation.navigate("CartScreen")}>
               <MaterialCommunityIcons
                 name="cart-outline"
                 size={24}

@@ -26,9 +26,9 @@ const MainHomescreen = () => {
 
   const [showaccount, setShowaccount] = useState(false);
 
-  console.log({
-    ksks: user_data?.data?.user?.name,
-  });
+  // console.log({
+  //   ksks: user_data?.data?.user?.name,
+  // });
 
   const [notification, setnotification] = useState("home");
 
@@ -118,8 +118,9 @@ const MainHomescreen = () => {
           <View style={styles.iconContainer}>
             <TouchableOpacity
               onPress={() => {
-                console.log("kdkd");
-                cart_state();
+                navigation.navigate("CartScreen")
+                // console.log("kdkd");
+                // cart_state();
               }}
             >
               <MaterialCommunityIcons
@@ -195,7 +196,7 @@ const MainHomescreen = () => {
           </ScrollView>
         )}
 
-        {notification === "cart" && <CartScreen />}
+        {/* {notification === "cart" && <CartScreen />} */}
         {notification === "account" && (
           <Account onCLose={() => setnotification("home")} />
         )}

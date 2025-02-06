@@ -43,6 +43,7 @@ import OrderHistory from "../screens/Orders/OrderHistory";
 // import OrderHistory from "../screens/Orders/OrderHistory";
 import ChangePassowrd from "../components/Auth/ChangePassowrd";
 import AllOrder from "../screens/Orders/AllOrder";
+import CartScreen from "../components/CartScreen";
 // import DeliveredOrders from "../screens/Orders/DeliveredOrders";
 const Stack = createNativeStackNavigator();
 
@@ -59,6 +60,7 @@ export default function UserNavigation() {
         name="RestaurantMenuScreen"
         component={RestaurantMenuScreen}
       />
+      <Stack.Screen name="CartScreen" component={CartScreen} />
 
       {/* Menu screen starts here */}
       <Stack.Screen name="Menu" component={Menu} />
