@@ -8,6 +8,7 @@ import {
   StyleSheet,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 const orders = Array(10).fill({
   id: "#E8F99P",
@@ -17,6 +18,7 @@ const orders = Array(10).fill({
 });
 
 const CartScreen = () => {
+  const navigation = useNavigation();
   const [activeTab, setActiveTab] = useState("Pending");
   const tabs = ["Pending", "Preparing", "Delivered"];
 
@@ -59,13 +61,16 @@ const CartScreen = () => {
         data={orders}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => (
-          <View style={styles.row}>
+          <TouchableOpacity
+            style={styles.row}
+            onPress={() => navigation.navigate("MyOrder")}
+          >
             <Text style={styles.cell}>{item.id}</Text>
             <Text style={styles.cell}>{item.deliveryCode}</Text>
             <Text style={styles.cell}>
               {item.date} | {item.time}
             </Text>
-          </View>
+          </TouchableOpacity>
         )}
       />
     </View>
