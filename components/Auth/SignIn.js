@@ -105,7 +105,9 @@ const SignIn = ({ navigation, setAuthType }) => {
         </TouchableOpacity>
 
         {user_isLoading ? (
-          <ActivityIndicator size="small" color={maincolors.primary} />
+          <TouchableOpacity style={styles.signInButton}>
+            <ActivityIndicator size="small" color="white" />
+          </TouchableOpacity>
         ) : (
           <TouchableOpacity
             style={styles.signInButton}
