@@ -27,7 +27,7 @@ export default function AllOrder() {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const { user_data } = useSelector((state) => state?.Auth);
-  const { vendor_order_data } = useSelector((state) => state?.OrderSlice);
+  const { vendor_order_data, vendor_order_isLoading } = useSelector((state) => state?.OrderSlice);
 
   useEffect(() => {
     dispatch(Get_All_Vendor_Order_Fun());
@@ -35,7 +35,7 @@ export default function AllOrder() {
     return () => {};
   }, []);
 
-  console.log({ vendorOrder: vendor_order_data[0].id });
+  console.log({ vendorOrder: vendor_order_data[0]?.id });
 
   const AcceptAnOrder_Mutation = useMutation(
     ( id, data_info ) => {
@@ -87,13 +87,13 @@ export default function AllOrder() {
     >
       <TouchableOpacity onPress={() => navigation.navigate("MyOrder")}>
         <Text style={{ color: "red", fontWeight: "bold", marginBottom: 8 }}>
-          {item.status}
+          {item?.status}
         </Text>
         <Text style={{ fontSize: 16, fontWeight: "bold" }}>
-          Order ID: {item.id}
+          Order ID: {item?.id}
         </Text>
         <Text style={{ color: "#666", fontSize: 14, marginBottom: 8 }}>
-          {item.date} | {item.time}
+          {item?.date} | {item?.time}
         </Text>
       </TouchableOpacity>
       <View
@@ -119,11 +119,11 @@ export default function AllOrder() {
               marginRight: 8,
             }}
           >
-            x{product.quantity}
+            x{product?.quantity}
           </Text>
           <View style={{ flex: 1 }}>
             <Text style={{ fontSize: 16, fontWeight: "bold" }}>
-              {product.menu_item.name}
+              {product?.menu_item?.name}
             </Text>
           </View>
           <Text
@@ -133,7 +133,7 @@ export default function AllOrder() {
               color: "#333",
             }}
           >
-            ₦{product.price.toLocaleString()}
+            ₦{product?.price.toLocaleString()}
           </Text>
         </View>
       ))}
@@ -153,7 +153,7 @@ export default function AllOrder() {
             marginRight: 8,
             alignItems: "center",
           }}
-          onPress={() => handleAcceptAnOrder(item.id, "accepted")}
+          onPress={() => handleAcceptAnOrder(item?.id, "accepted")}
         >
           {AcceptAnOrder_Mutation.isLoading ? (
             <ActivityIndicator size={"small"} color={"white"} />
@@ -178,9 +178,9 @@ export default function AllOrder() {
             borderRadius: 4,
             alignItems: "center",
           }}
-          onPress={() => handleAcceptAnOrder(item.id, "declined")}
+          onPress={() => handleAcceptAnOrder(item?.id, "declined")}
         >
-          {AcceptAnOrder_Mutation.isLoading ? (
+          {AcceptAnOrder_Mutation?.isLoading ? (
             <ActivityIndicator size={"small"} color={"yellow"}/>
           ) : (
             <Text
@@ -213,7 +213,7 @@ export default function AllOrder() {
             <FlatList
               data={vendor_order_data}
               renderItem={renderOrder}
-              keyExtractor={(item) => item.id}
+              keyExtractor={(item) => item?.id}
               contentContainerStyle={{
                 paddingHorizontal: 16,
                 paddingVertical: 8,

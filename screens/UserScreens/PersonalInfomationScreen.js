@@ -19,6 +19,7 @@ import { ReusableTitle } from "../../components/shared/Reuseablecomponent";
 import { maincolors } from "../../utills/Themes";
 
 const PersonalInfomationScreen = ({ onClose }) => {
+  
   const navigation = useNavigation();
   const menuItems = [
     {
@@ -34,7 +35,7 @@ const PersonalInfomationScreen = ({ onClose }) => {
     {
       title: "Change Password",
       icon: <AntDesign name="lock1" size={24} color="#FFA500" />,
-      screen: "ChangePassowrd",
+      screen: "updatePassword",
     },
 
     {
