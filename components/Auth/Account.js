@@ -56,7 +56,7 @@ const Account = ({ onCLose }) => {
     {
       title: "Orders",
       icon: <Feather name="shopping-bag" size={24} color="#FFA500" />,
-      screen: "DeliveredOrders",
+      screen: "CartScreen",
     },
     {
       title: "Menu",
