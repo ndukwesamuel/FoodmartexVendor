@@ -26,7 +26,8 @@ const API_BASEURL = "https://foodmart-backend.gigtech.site/api/";
 export default function NewOrders() {
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const [loadingOrderId, setLoadingOrderId] = useState(null);
+  const [acceptingOrderId, setAcceptingOrderId] = useState(null);
+  const [rejectingOrderId, setRejectingOrderId] = useState(null);
   const { user_data } = useSelector((state) => state?.Auth);
   const { vendor_order_data, vendor_order_isLoading } = useSelector(
     (state) => state?.OrderSlice
@@ -41,11 +42,14 @@ export default function NewOrders() {
   console.log({ vendorOrder: vendor_order_data[0]?.id });
 
   const AcceptAnOrder_Mutation = useMutation(
-    ({id, data_info}) => {
-      setLoadingOrderId(id);
-      console.log({data_info})
+    ({ id, data_info }) => {
+      if (data_info.status === "accepted") {
+        setAcceptingOrderId(id);
+      } else {
+        setRejectingOrderId(id);
+      }
+
       const url = `${API_BASEURL}v1/vendor/orders/${id}/status`;
-      console.log({ url: url });
       const config = {
         headers: {
           "Content-Type": "application/json",
@@ -61,14 +65,16 @@ export default function NewOrders() {
           type: "success",
           text1: `${success?.data?.message}`,
         });
-        setLoadingOrderId(null);
+        setAcceptingOrderId("");
+        setRejectingOrderId("");
       },
       onError: (error) => {
         Toast.show({
           type: "error",
           text1: `${error?.response?.data?.message}`,
         });
-        setLoadingOrderId(null);
+        setAcceptingOrderId("");
+        setRejectingOrderId("");
       },
     }
   );
@@ -76,7 +82,7 @@ export default function NewOrders() {
   const handleAcceptAnOrder = (id, statuss) => {
     const data_info = { status: statuss };
     // console.log({ id: id, status: statuss });
-    AcceptAnOrder_Mutation.mutate({id, data_info});
+    AcceptAnOrder_Mutation.mutate({ id, data_info });
   };
   const renderOrder = ({ item }) => (
     <View
@@ -162,7 +168,7 @@ export default function NewOrders() {
           }}
           onPress={() => handleAcceptAnOrder(item?.id, "accepted")}
         >
-          {loadingOrderId === item?.id ? (
+          {acceptingOrderId === item?.id ? (
             <ActivityIndicator size={"small"} color={"white"} />
           ) : (
             <Text style={{ fontSize: 16, fontWeight: "bold", color: "#fff" }}>
@@ -182,7 +188,7 @@ export default function NewOrders() {
           }}
           onPress={() => handleAcceptAnOrder(item?.id, "declined")}
         >
-          {loadingOrderId === item?.id ? (
+          {rejectingOrderId === item?.id ? (
             <ActivityIndicator size={"small"} color={"yellow"} />
           ) : (
             <Text
