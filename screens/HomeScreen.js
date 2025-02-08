@@ -110,7 +110,7 @@ const HomeScreen = () => {
               </Text>
             </View>
 
-            <View style={styles.promoContainer}>
+            <TouchableOpacity style={styles.promoContainer} onPress={() => navigation.navigate("NewOrders")}>
               <Image
                 source={require("../assets/Foodmart/bell.png")}
                 style={{
@@ -126,7 +126,7 @@ const HomeScreen = () => {
               >
                 New Orders
               </Text>
-            </View>
+            </TouchableOpacity>
 
             {/* Discounts & Restaurants Sections */}
             <View

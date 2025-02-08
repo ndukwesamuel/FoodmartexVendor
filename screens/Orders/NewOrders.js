@@ -21,13 +21,15 @@ import { Get_All_Vendor_Order_Fun } from "../../Redux/OrderSlice";
 import { useMutation } from "react-query";
 import Toast from "react-native-toast-message";
 import axios from "axios";
-const API_BASEURL = "https://foodmart-backend.gigtech.site/api/"
+const API_BASEURL = "https://foodmart-backend.gigtech.site/api/";
 
-export default function AllOrder() {
+export default function NewOrders() {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const { user_data } = useSelector((state) => state?.Auth);
-  const { vendor_order_data, vendor_order_isLoading } = useSelector((state) => state?.OrderSlice);
+  const { vendor_order_data, vendor_order_isLoading } = useSelector(
+    (state) => state?.OrderSlice
+  );
 
   useEffect(() => {
     dispatch(Get_All_Vendor_Order_Fun());
@@ -38,9 +40,9 @@ export default function AllOrder() {
   console.log({ vendorOrder: vendor_order_data[0]?.id });
 
   const AcceptAnOrder_Mutation = useMutation(
-    ( id, data_info ) => {
+    (id, data_info) => {
       const url = `${API_BASEURL}v1/vendor/orders/:${id}/status`;
-      console.log({url: url})
+      console.log({ url: url });
       const config = {
         headers: {
           "Content-Type": "application/json",
@@ -144,7 +146,7 @@ export default function AllOrder() {
           marginTop: 16,
         }}
       >
-        {/* <Pressable
+        <Pressable
           style={{
             flex: 1,
             backgroundColor: "#FFA500",
@@ -168,8 +170,8 @@ export default function AllOrder() {
               Accept
             </Text>
           )}
-        </Pressable> */}
-        {/* <Pressable
+        </Pressable>
+        <Pressable
           style={{
             flex: 1,
             borderWidth: 1,
@@ -181,7 +183,7 @@ export default function AllOrder() {
           onPress={() => handleAcceptAnOrder(item?.id, "declined")}
         >
           {AcceptAnOrder_Mutation?.isLoading ? (
-            <ActivityIndicator size={"small"} color={"yellow"}/>
+            <ActivityIndicator size={"small"} color={"yellow"} />
           ) : (
             <Text
               style={{
@@ -193,7 +195,7 @@ export default function AllOrder() {
               Reject
             </Text>
           )}
-        </Pressable> */}
+        </Pressable>
       </View>
     </View>
   );
@@ -204,14 +206,13 @@ export default function AllOrder() {
           style={{ position: "absolute", top: 15, zIndex: 1, left: 20 }}
         />
         <ReusableTitle data="All Orders" />
-        <View
-          style={{
-            marginVertical: 20,
-          }}
-        >
-          {vendor_order_data?.length > 0 ? (
+        <View style={{ marginVertical: 20 }}>
+          {vendor_order_data?.filter((order) => order.status === "pending")
+            ?.length > 0 ? (
             <FlatList
-              data={vendor_order_data}
+              data={vendor_order_data.filter(
+                (order) => order.status === "pending"
+              )}
               renderItem={renderOrder}
               keyExtractor={(item) => item?.id}
               contentContainerStyle={{
@@ -221,7 +222,7 @@ export default function AllOrder() {
             />
           ) : (
             <Text style={{ textAlign: "center", marginTop: 20, fontSize: 20 }}>
-              No orders available.
+              No pending orders available.
             </Text>
           )}
         </View>

@@ -61,7 +61,7 @@ const Account = ({ onCLose }) => {
     {
       title: "Menu",
       icon: <Feather name="heart" size={24} color={maincolors.primary} />,
-      screen: "MyFavorite",
+      screen: "Menu",
     },
     {
       title: "Wallet",

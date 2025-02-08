@@ -44,6 +44,7 @@ import OrderHistory from "../screens/Orders/OrderHistory";
 import ChangePassowrd from "../components/Auth/ChangePassowrd";
 import AllOrder from "../screens/Orders/AllOrder";
 import CartScreen from "../components/CartScreen";
+import NewOrders from "../screens/Orders/NewOrders";
 // import DeliveredOrders from "../screens/Orders/DeliveredOrders";
 const Stack = createNativeStackNavigator();
 
@@ -84,6 +85,7 @@ export default function UserNavigation() {
       <Stack.Screen name="MyOrder" component={MyOrder} />
 
       <Stack.Screen name="AllOrders" component={AllOrder} />
+      <Stack.Screen name="NewOrders" component={NewOrders}/>
 
       <Stack.Screen name="FirstRewardPage" component={FirstRewardScreen} />
       {/* <Stack.Screen name="SecondRewardPage" component={SecondRewardScreen} /> */}
