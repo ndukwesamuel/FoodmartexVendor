@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -26,6 +26,7 @@ const API_BASEURL = "https://foodmart-backend.gigtech.site/api/";
 export default function NewOrders() {
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  const [loadingOrderId, setLoadingOrderId] = useState(null);
   const { user_data } = useSelector((state) => state?.Auth);
   const { vendor_order_data, vendor_order_isLoading } = useSelector(
     (state) => state?.OrderSlice
@@ -40,8 +41,10 @@ export default function NewOrders() {
   console.log({ vendorOrder: vendor_order_data[0]?.id });
 
   const AcceptAnOrder_Mutation = useMutation(
-    (id, data_info) => {
-      const url = `${API_BASEURL}v1/vendor/orders/:${id}/status`;
+    ({id, data_info}) => {
+      setLoadingOrderId(id);
+      console.log({data_info})
+      const url = `${API_BASEURL}v1/vendor/orders/${id}/status`;
       console.log({ url: url });
       const config = {
         headers: {
@@ -58,20 +61,22 @@ export default function NewOrders() {
           type: "success",
           text1: `${success?.data?.message}`,
         });
+        setLoadingOrderId(null);
       },
       onError: (error) => {
         Toast.show({
           type: "error",
           text1: `${error?.response?.data?.message}`,
         });
+        setLoadingOrderId(null);
       },
     }
   );
 
-  const handleAcceptAnOrder = (id, status) => {
-    const data = { status: status };
-    console.log({ id: id, status: status });
-    AcceptAnOrder_Mutation.mutate(id, data);
+  const handleAcceptAnOrder = (id, statuss) => {
+    const data_info = { status: statuss };
+    // console.log({ id: id, status: statuss });
+    AcceptAnOrder_Mutation.mutate({id, data_info});
   };
   const renderOrder = ({ item }) => (
     <View
@@ -157,20 +162,15 @@ export default function NewOrders() {
           }}
           onPress={() => handleAcceptAnOrder(item?.id, "accepted")}
         >
-          {AcceptAnOrder_Mutation.isLoading ? (
+          {loadingOrderId === item?.id ? (
             <ActivityIndicator size={"small"} color={"white"} />
           ) : (
-            <Text
-              style={{
-                fontSize: 16,
-                fontWeight: "bold",
-                color: "#fff",
-              }}
-            >
+            <Text style={{ fontSize: 16, fontWeight: "bold", color: "#fff" }}>
               Accept
             </Text>
           )}
         </Pressable>
+
         <Pressable
           style={{
             flex: 1,
@@ -182,15 +182,11 @@ export default function NewOrders() {
           }}
           onPress={() => handleAcceptAnOrder(item?.id, "declined")}
         >
-          {AcceptAnOrder_Mutation?.isLoading ? (
+          {loadingOrderId === item?.id ? (
             <ActivityIndicator size={"small"} color={"yellow"} />
           ) : (
             <Text
-              style={{
-                fontSize: 16,
-                fontWeight: "bold",
-                color: "#FFA500",
-              }}
+              style={{ fontSize: 16, fontWeight: "bold", color: "#FFA500" }}
             >
               Reject
             </Text>
